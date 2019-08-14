@@ -4,8 +4,7 @@ import { ScoringComponent } from './scoring/scoring.component';
 import { SummaryComponent } from './summary/summary.component';
 import {FullPagesRoutingModule} from './full-pages-routing.module';
 import {SharedModule} from '../../shared/shared.module';
-
-
+import { SetupComponent } from './setup/setup.component';
 
 @NgModule({
     imports: [
@@ -15,7 +14,8 @@ import {SharedModule} from '../../shared/shared.module';
     ],
     declarations: [
         ScoringComponent,
-        SummaryComponent
+        SummaryComponent,
+        SetupComponent
     ]
 })
 export class FullPagesModule { }

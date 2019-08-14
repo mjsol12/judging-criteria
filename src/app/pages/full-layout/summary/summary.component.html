@@ -1,16 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-    <img width="100" alt="Angular Logo" src="assets/image/svg/trophy.svg">
+    <img width="100" alt="Angular Logo" src="assets/image/png/ranking.png">
     <h1>
-        Judging Criteria
+        Score Summary
     </h1>
 </div>
 
 <div class="container">
     <hot-table
             className="font-small-2"
+            [colHeaders]="scoreSummaryH"
+            [rowHeaders]="true"
             [data]="data"
-            [colHeaders]="true"
             contextMenu="true"
             stretchH="all"
             [licenseKey]="'non-commercial-and-evaluation'">
