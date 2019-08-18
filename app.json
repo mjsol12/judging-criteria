@@ -1,0 +1,16 @@
+{
+  "apps" : [
+    {
+      "name"  :   "pageantsystem",
+      "script"    :   "dist-server/server/psmiles.app.js",
+      "watch"       : false,
+      "exec_mode" :   "cluster",
+      "instances" :   "max",
+      "max_memory_restart"    :   "1024M",
+      "merge_logs"    :   true,
+      "env":  {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

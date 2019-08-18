@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-summary',
-  templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.css']
+    selector: 'app-summary',
+    templateUrl: './summary.component.html',
+    styleUrls: ['./summary.component.css']
 })
 export class SummaryComponent implements OnInit {
     data: any[] = [
@@ -13,10 +13,10 @@ export class SummaryComponent implements OnInit {
         ['Candidate 4', 98, 79, 80, 80, 90, 95],
         ['Candidate 5', 98, 79, 80, 80, 90, 95]
     ];
-  constructor() { }
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
     scoreSummaryH(col) {
         switch (col) {

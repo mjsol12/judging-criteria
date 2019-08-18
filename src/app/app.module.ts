@@ -10,7 +10,10 @@ import { ContentLayoutComponent } from './layout/content-layout/content-layout.c
 import {SharedModule} from './shared/shared.module';
 import {LoginComponent} from './pages/content-layout/login/login.component';
 import {ApiService} from './shared/api/api.service';
-import {PageantCriteriaService} from './shared/api/pageant-criteria.service';
+import {PageantApiService} from './shared/api/pss/pageant-api.service';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthInterceptorService} from './shared/interceptors/auth-interceptor.service';
 
 @NgModule({
     declarations: [
@@ -21,12 +24,17 @@ import {PageantCriteriaService} from './shared/api/pageant-criteria.service';
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
         AppRoutingModule,
         SharedModule,
         NgbModule,
         HotTableModule.forRoot()
     ],
-    providers: [ApiService, PageantCriteriaService],
+    providers: [
+        ApiService,
+        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

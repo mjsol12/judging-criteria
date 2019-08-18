@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import Handsontable from 'handsontable';
+import {PageantApiService} from '../../../shared/api/pss/pageant-api.service';
 
 @Component({
     selector: 'app-scoring',
@@ -8,110 +9,137 @@ import Handsontable from 'handsontable';
     styleUrls: ['./scoring.component.css']
 })
 export class ScoringComponent implements OnInit {
-    hotSettings: Handsontable.GridSettings = {
-        rowHeaders: true,
-        contextMenu: true,
-    };
+    preQuestionHotSettings: Handsontable.GridSettings = {};
+    preProductionOutfitHotSettings: Handsontable.GridSettings = {};
 
-    dataTable = dataTable;
-    constructor() { }
+    dataTable = dataTable1;
+    dataTable2 = dataTable2;
+
+    constructor(private psApi: PageantApiService) { }
 
     ngOnInit() {
-        this.hotSettings.colHeaders =  this.dataTable[0].columnHeaders.map(value => {
-            return value.headerName;
-        });
-
-        this.hotSettings.data = this.dataTable[0].candidates;
+        this.preQuestionHot();
+        this.preProductionOutfitHot();
     }
-    scoreBoardH(col) {
-        switch (col) {
-            case 0:
-                return '<b>Candidate</b>';
-            case 1:
-                return '<b>Criteria 1 (20%)</b>';
-            case 2:
-                return '<b>Criteria 2 (20%)</b>';
-            case 3:
-                return '<b>Criteria 3 (20%)</b>';
-            case 4:
-                return '<b>Criteria 4 (20%)</b>';
-            case 5:
-                return '<b>Criteria 5 (20%)</b>';
-            case 6:
-                return '<b>Criteria 6 (20%)</b>';
-        }
+
+    preQuestionHot() {
+        this.preQuestionHotSettings.nestedHeaders = [this.dataTable[0].nestedHeaders, this.dataTable[0].colHeaders];
+        this.preQuestionHotSettings.columns = this.dataTable[0].columns;
+        this.preQuestionHotSettings.data = this.dataTable[0].candidates;
+        console.log(JSON.stringify(this.dataTable));
+    }
+
+    preProductionOutfitHot() {
+        // TODO: convert to camelCase and make question value to object key
+        // https://www.w3resource.com/javascript-exercises/javascript-string-exercise-11.php
+        // convert value to key;
+        // https://stackoverflow.com/questions/11508463/javascript-set-object-key-by-variable
+        this.preProductionOutfitHotSettings.nestedHeaders = [this.dataTable2[0].nestedHeaders, this.dataTable2[0].colHeaders];
+        this.preProductionOutfitHotSettings.columns = this.dataTable2[0].columns;
+        this.preProductionOutfitHotSettings.data = this.dataTable2[0].candidates;
+        console.log(JSON.stringify(this.dataTable));
+    }
+
+    getJudge() {
+        this.psApi.getJudge().subscribe((val) => { console.log(val) });
     }
 }
 
 
+export const dataTable1: any[] = [{
+    title: 'Preliminary Round',
+    nestedHeaders: ['', {label: 'Question And Answer - 50%', colspan: 3}],
+    colHeaders : ['Candidate', 'Content <br> Relevance - 50', 'Conceptualization of Thoughts <br> Delivery and Choice of Words - 40', 'Impact <br> 10'],
+    columns : [
+        {
+            data: 'candidate',
+            editor: false
+        },
+        {
+            data: 'content',
+            editor: 'numeric'
+        },
+        {
+            data: 'conceptualizationThoughts',
+            editor: 'numeric'
+        },
+        {
+            data: 'impact',
+            editor: 'numeric'
+        }
+    ],
+    candidates: [
+        {
+            candidate: '#1',
+            content: 80,
+            conceptualizationThoughts: 90,
+            impact: 90
+        },
+        {
+            candidate: '#3',
+            content: 80,
+            conceptualizationThoughts: 90,
+            impact: 90
+        },
+        {
+            candidate: '#4',
+            content: 80,
+            conceptualizationThoughts: 90,
+            impact: 90
+        },
+    ]
+}];
+export const dataTable2: any[] = [{
+    title: 'Preliminary Round',
+    nestedHeaders: ['', {label: 'Production Outfit - 30%', colspan: 4}],
+    colHeaders : ['Candidate', 'Poise and Bearing - 50', 'Outfit - 30', 'Beauty - 20', 'Impact 10'],
+    columns : [
+        {
+            data: 'candidate',
+            editor: false
+        },
+        {
+            data: 'PoiseBearing',
+            editor: 'numeric'
+        },
+        {
+            data: 'outfit',
+            editor: 'numeric'
+        },
+        {
+            data: 'beauty',
+            editor: 'numeric'
+        },
+        {
+            data: 'impact',
+            editor: 'numeric'
+        }
+    ],
+    candidates: [
+        {
+            candidate: '#1',
+            content: 80,
+            PoiseBearing: 90,
+            outfit: 90,
+            beauty: 90,
+            impact: 90
+        },
+        {
+            candidate: '#2',
+            content: 80,
+            PoiseBearing: 90,
+            outfit: 90,
+            beauty: 90,
+            impact: 90
+        },
+        {
+            candidate: '#3',
+            content: 80,
+            PoiseBearing: 90,
+            outfit: 90,
+            beauty: 90,
+            impact: 90
+        }
+    ]
+}]
 
-
-export const dataTable: any[] = [
-    {
-        columnHeaders : [
-            {
-                id: 'candidate',
-                headerName: 'Candidate'
-            },
-            {
-                id: 'firstCriteria',
-                headerName: 'Pose (20%)',
-            },
-            {
-                id: 'secondCriteria',
-                headerName: 'Sports (20%)',
-            },
-            {
-                id: 'secondCriteria',
-                headerName: 'Evening Attire (20%)',
-            },
-            {
-                id: 'thirdCriteria',
-                headerName: 'Sports (20%)',
-            },
-        ],
-        candidates: [
-            {
-                candidate: '#1',
-                firstCriteria: '80',
-                secondCriteria: '90',
-                thirdCriteria: '90',
-                fourthCriteria: '90',
-                fifthCriteria: '90',
-                sixthCriteria: '90',
-                seventhCriteria: '90',
-                eightCriteria: '90',
-                ninthCriteria: '90',
-                tenthCriteria: '90',
-            },
-            {
-                data: '',
-                candidate: '#2',
-                firstCriteria: '80',
-                secondCriteria: '90',
-                thirdCriteria: '90',
-                fourthCriteria: '90',
-                fifthCriteria: '90',
-                sixthCriteria: '90',
-                seventhCriteria: '90',
-                eightCriteria: '90',
-                ninthCriteria: '90',
-                tenthCriteria: '90',
-            },
-            {
-                data: '',
-                candidate: '#3',
-                firstCriteria: '80',
-                secondCriteria: '90',
-                thirdCriteria: '90',
-                fourthCriteria: '90',
-                fifthCriteria: '90',
-                sixthCriteria: '90',
-                seventhCriteria: '90',
-                eightCriteria: '90',
-                ninthCriteria: '90',
-                tenthCriteria: '90',
-            },
-        ]
-    }
-]

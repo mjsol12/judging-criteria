@@ -1,14 +1,32 @@
-Candidate
-<form>
-    <input placeholder="full name">
-    <input placeholder="candidate #">
-    <button>Add</button>
-</form>
+<div class="container">
+    <div class="border">
+        Methodology
+        <div>
+            <input type="text" placeholder="Preliminary Round" [(ngModel)]="methodology">
+            <input type="number" placeholder="Weight" [(ngModel)]="weight">
+            <button type="button"  (click)="getProcedures()" >Add</button>
+        </div>
+        {{methodology}} - {{weight}}
+        Category
+        <form>
+            <input placeholder="Question Answer">
+            <button>Add</button>
+        </form>
 
-Criteria
-<form>
-    <input placeholder="Short Name">
-    <input placeholder="Description">
-    <input placeholder="weight">
-    <button>Add</button>
-</form>
+        <!--Criteria-->
+        <!--<form>-->
+            <!--<input placeholder="Short Name">-->
+            <!--<input placeholder="Description">-->
+            <!--<input placeholder="weight">-->
+            <!--<button>Add</button>-->
+        <!--</form>-->
+
+    </div>
+    Candidate
+    <form [formGroup]="candidateFormGroup">
+        <input type="text" placeholder="Full Name" formControlName="fullname">
+        <input type="number" placeholder="Candidate Number" formControlName="candidateNumber">
+        <input type="text" placeholder="Gender" formControlName="gender">
+        <button (click)="saveCandidate()">Add</button>
+    </form>
+</div>

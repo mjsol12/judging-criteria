@@ -25,6 +25,10 @@
       true,
       "rxjs/Rx"
     ],
+    "indent": [
+      true,
+      "spaces"
+    ],
     "interface-name": false,
     "max-classes-per-file": false,
     "max-line-length": [
@@ -84,7 +88,15 @@
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
-    "use-pipe-transform-interface": true
+    "use-pipe-transform-interface": true,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
   },
   "rulesDirectory": [
     "codelyzer"

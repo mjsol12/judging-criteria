@@ -1,23 +1,27 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
     <h1>
-        <span><img width="100" alt="Angular Logo" src="assets/image/png/score.png"> </span> <span>Score Board</span>
+        <span>Score Board</span>
     </h1>
 </div>
-
 <div class="container">
-    <!--<hot-table-->
-            <!--className="font-small-2"-->
-            <!--[data]="data"-->
-            <!--[colHeaders]=""-->
-            <!--[rowHeaders]="false"-->
-            <!--contextMenu="true"-->
-            <!--stretchH="all"-->
-            <!--[licenseKey]="'non-commercial-and-evaluation'">-->
-    <!--</hot-table>-->
+    <h3>Preliminary Round</h3>
+    <ngb-tabset #t="ngbTabset">
+        <ngb-tab id="tab-selectbyid1" title="Question and Answer">
+            <ng-template ngbTabContent>
+                <div class="m-4">
+                    <hot-table [settings]="preQuestionHotSettings" [rowHeaders]="false" [contextMenu]="true" [licenseKey]="'non-commercial-and-evaluation'"></hot-table>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="tab-selectbyid2" title="Production Outfit">
+            <ng-template ngbTabContent>
+                <div class="m-4">
+                    <hot-table [settings]="preProductionOutfitHotSettings" [rowHeaders]="false" [contextMenu]="true" [licenseKey]="'non-commercial-and-evaluation'"></hot-table>
+                </div>
+            </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
 
-
-    <hot-table [settings]="hotSettings" [licenseKey]="'non-commercial-and-evaluation'">
-
-    </hot-table>
 </div>
+<button (click)="getJudge()">get Judge</button>
