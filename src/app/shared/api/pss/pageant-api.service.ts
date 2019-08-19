@@ -24,9 +24,10 @@ export class PageantApiService {
         return this.http.get<any>(`${v1}${ServerRoutes.JUDGE}`);
     }
 
-    // school
-    saveCandidate(candidate: Candidate) {
+    // preliminary Candidates
+    registerPreliminaryCandidate(candidate: Candidate) {
         // returns the user's school if no id specified
         return this.http.post<Candidate>(`${v1}${ServerRoutes.CANDIDATE}`, candidate);
     }
+
 }

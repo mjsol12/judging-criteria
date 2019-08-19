@@ -5,34 +5,51 @@
     </h1>
 </div>
 <div class="container">
-    <h3>Preliminary Round</h3>
-    <ngb-tabset #t="ngbTabset">
-        <ngb-tab id="tab-selectbyid1" title="Question and Answer">
+    <ngb-tabset type="pills">
+        <ngb-tab title="Preliminary Round">
             <ng-template ngbTabContent>
-                <div class="m-4">
-                    <hot-table
-                            #preQuestionHotTab
-                            [nestedHeaders]="nestedHeaders"
-                            [data]="datas"
-                            [rowHeaders]="false"
-                            [contextMenu]="true"
-                            stretchH= "all"
-                            [licenseKey]="'non-commercial-and-evaluation'">
-                        <hot-column *ngFor="let column of columns"
-                                    [data]="column.data"
-                                    [type]="column.type"
-                                    [readOnly]="column.readOnly">
-                        </hot-column>
-                    </hot-table>
-                </div>
+                <div class="m-2"></div>
+                <ngb-tabset #t="ngbTabset">
+                    <ngb-tab id="tab-selectbyid1" title="Question and Answer">
+                        <ng-template ngbTabContent>
+                            <div class="m-4">
+                                <hot-table
+                                        #preQuestionHotTab
+                                        [nestedHeaders]="nestedHeaders"
+                                        [data]="datas"
+                                        [rowHeaders]="false"
+                                        [contextMenu]="true"
+                                        stretchH= "all"
+                                        [licenseKey]="'non-commercial-and-evaluation'">
+                                    <hot-column *ngFor="let column of columns"
+                                                [data]="column.data"
+                                                [type]="column.type"
+                                                [readOnly]="column.readOnly">
+                                    </hot-column>
+                                </hot-table>
+                            </div>
+                        </ng-template>
+                    </ngb-tab>
+                    <ngb-tab id="tab-selectbyid2" title="Production Outfit">
+                        <ng-template ngbTabContent>
+
+                        </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
             </ng-template>
         </ngb-tab>
-        <ngb-tab id="tab-selectbyid2" title="Production Outfit">
+        <ngb-tab title="Pre-Final Round">
             <ng-template ngbTabContent>
-
+                <p>Because default values have been customized.</p>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="Final Q & A">
+            <ng-template ngbTabContent>
+                <p>Because default values have been customized.</p>
             </ng-template>
         </ngb-tab>
     </ngb-tabset>
 
 </div>
 <button (click)="getJudge()">Submit</button>
+<button (click)="registerCandidate()">Submit</button>

@@ -1,9 +1,9 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Candidate} from '../../../shared/model/pageant-procedure/candidate.model';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Candidate, Gender, RankingStage} from '../../../shared/model/pageant-procedure/candidate.model';
 import {PageantApiService} from '../../../shared/api/pss/pageant-api.service';
 import {Subscription} from 'rxjs';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Procedure} from '../../../shared/model/pageant-procedure/procedure.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
     selector: 'app-setup',
@@ -18,34 +18,32 @@ export class SetupComponent implements OnInit, OnDestroy {
 
     candidateFormGroup: FormGroup;
 
+    gender = Gender;
+    rankingStage = RankingStage;
     candidateSubscription: Subscription;
-    constructor(private pageantApiService: PageantApiService, private fb: FormBuilder) { }
+    constructor(private pageantApiService: PageantApiService, private toastrService: ToastrService , private fb: FormBuilder) { }
 
     ngOnInit() {
         this.candidateFormGroup = this.fb.group({
             fullname: null,
-            candidateNumber: null,
-            gender: null
+            candidateNumber: [null, Validators.required],
+            gender: [null, Validators.required],
+            rankingStage: [null, Validators.required]
         });
-    }
-
-    getProcedures() {
-        this.pageantApiService.getProcedures().subscribe(val => {
-            console.log(val);
-        });
-    }
-
-    addNewProcedure() {
-        debugger
-        const method = new Procedure(this.methodology, this.weight);
-        console.log(method)
     }
 
     saveCandidate() {
+        debugger
+        if (this.candidateFormGroup.invalid) {
+            return this.toastrService.error('Please fill up all input',  'Form Invalid');
+        }
         const info = this.candidateFormGroup.getRawValue();
-        const contestant = new Candidate(info.fullname, info.candidateNumber, info.gender);
-        this.candidateSubscription = this.pageantApiService.saveCandidate(contestant).subscribe(val => {
-            console.log(val);
+        const contestant = new Candidate(info.fullname, info.candidateNumber, info.gender, info.rankingStage);
+
+        this.candidateSubscription = this.pageantApiService.registerPreliminaryCandidate(contestant).subscribe(val => {
+            this.toastrService.success(`Successfull Added to ${info.rankingStage}`);
+        }, error2 => {
+            this.toastrService.error( error2.message , 'Failed Response Server');
         });
     }
 

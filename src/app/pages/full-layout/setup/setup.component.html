@@ -1,32 +1,28 @@
 <div class="container">
-    <div class="border">
-        Methodology
-        <div>
-            <input type="text" placeholder="Preliminary Round" [(ngModel)]="methodology">
-            <input type="number" placeholder="Weight" [(ngModel)]="weight">
-            <button type="button"  (click)="getProcedures()" >Add</button>
+    <form  (submit)="saveCandidate()" [formGroup]="candidateFormGroup">
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Full Name (Optional)</label>
+            <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="fullname">
         </div>
-        {{methodology}} - {{weight}}
-        Category
-        <form>
-            <input placeholder="Question Answer">
-            <button>Add</button>
-        </form>
-
-        <!--Criteria-->
-        <!--<form>-->
-            <!--<input placeholder="Short Name">-->
-            <!--<input placeholder="Description">-->
-            <!--<input placeholder="weight">-->
-            <!--<button>Add</button>-->
-        <!--</form>-->
-
-    </div>
-    Candidate
-    <form [formGroup]="candidateFormGroup">
-        <input type="text" placeholder="Full Name" formControlName="fullname">
-        <input type="number" placeholder="Candidate Number" formControlName="candidateNumber">
-        <input type="text" placeholder="Gender" formControlName="gender">
-        <button (click)="saveCandidate()">Add</button>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Candidate #</label>
+            <input type="number" class="form-control" id="exampleFormControlInput1" formControlName="candidateNumber" required>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Gender</label>
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="gender" required>
+                <option>{{gender.Male}}</option>
+                <option>{{gender.Female}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Please select stage</label>
+            <select class="form-control" id="exampleFormControlSelect1" formControlName="rankingStage" required>
+                <option>{{rankingStage.PRELIMINARY}}</option>
+                <option>{{rankingStage.FINALROUND}}</option>
+                <option>{{rankingStage.QAFINAL}}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
     </form>
 </div>
