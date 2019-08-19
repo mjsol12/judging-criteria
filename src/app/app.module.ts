@@ -16,7 +16,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthInterceptorService} from './shared/interceptors/auth-interceptor.service';
 import {AuthenticationService} from './shared/auth-api/authentication.service';
 import {AuthGuard} from './shared/auth-api/auth-guard.service';
-import { ScoreComponent } from './score/score.component';
 import { SummaryComponent } from './summary/summary.component';
 import { PrelimniaryComponent } from './scores/prelimniary/prelimniary.component';
 import { FinalRoundComponent } from './scores/final-round/final-round.component';
@@ -28,7 +27,6 @@ import { FinalQuestionAndAnswerComponent } from './scores/final-question-and-ans
         LoginComponent,
         FullLayoutComponent,
         ContentLayoutComponent,
-        ScoreComponent,
         SummaryComponent,
         PrelimniaryComponent,
         FinalRoundComponent,

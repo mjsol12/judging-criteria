@@ -8,7 +8,7 @@ import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
   styleUrls: ['./final-question-and-answer.component.css']
 })
 export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, OnDestroy {
-    nestedHeaders = preliminaryTable.nestedHeaders ;
+    nestedHeaders = finaleQATable.nestedHeaders ;
     data: any ;
 
     judgeId: string;
@@ -45,7 +45,7 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
 }
 
 // Format Preliminary sample
-export const preliminaryTable = {
+export const finaleQATable = {
     nestedHeaders: [
         [   'Candidate <br> <span style="font-size: 10px">#</span>',
             'Conceptualization of Thoughts <br><span style="font-size: 10px;"> Delivery and Choice of Words - 50</span>',
