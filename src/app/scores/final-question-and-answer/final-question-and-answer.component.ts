@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
+import {Score} from '../../shared/model/pp/score.model';
 
 @Component({
   selector: 'app-final-question-and-answer',
@@ -9,11 +10,12 @@ import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
 })
 export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, OnDestroy {
     nestedHeaders = finaleQATable.nestedHeaders ;
-    data: any ;
+    data: Score;
 
     judgeId: string;
     private sub: any;
-    constructor(private route: ActivatedRoute, private searchApi: PageantApiService) { }
+    constructor(private route: ActivatedRoute, private searchApi: PageantApiService) {
+    }
 
     ngOnInit() {
         // sample url
@@ -22,11 +24,12 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
         this.sub = this.route.queryParams.subscribe(params => {
             this.judgeId = params['judge'];
         });
+
     }
     ngAfterViewInit() {
         if (this.judgeId) {
-            this.searchApi.getScoreModule(this.judgeId).toPromise().then(value => {
-                this.data = value.contestants;
+            this.searchApi.getScoreModule(this.judgeId).toPromise().then(score => {
+                this.data = score;
             });
         }
     }

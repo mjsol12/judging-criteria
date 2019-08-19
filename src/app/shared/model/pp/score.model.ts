@@ -13,10 +13,6 @@ export class Contestant {
     public finalRoundRank?: number;
     public FINALROUND_SCORE?: number;
 
-    // q & a finale
-    public questAnsFinalRank?: number;
-    public QAFINAL_SCORE?: number;
-
     // best in school uniform
     public schoolUniformRank?: number;
     public SCHOOLUNIFORM_SCORE: number;
@@ -26,6 +22,10 @@ export class Contestant {
     // best in costume
     public creativeCostumeRank?: number;
     public CREATIVECOSTUME_SCORE?: number;
+
+    // q & a finale
+    public questAnsFinalRank?: number;
+    public QAFINAL_SCORE?: number;
 
     public CONTESTANT?: string;
     constructor(

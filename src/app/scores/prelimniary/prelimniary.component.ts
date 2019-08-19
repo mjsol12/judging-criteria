@@ -2,6 +2,7 @@ import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core'
 import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
 import 'rxjs/add/operator/filter';
+import {Score} from '../../shared/model/pp/score.model';
 @Component({
     selector: 'app-prelimniary',
     templateUrl: './prelimniary.component.html',
@@ -10,7 +11,7 @@ import 'rxjs/add/operator/filter';
 export class PrelimniaryComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input('preliminaryHotTable')preliminaryHotTable;
     nestedHeaders = preliminaryTable.nestedHeaders ;
-    data: any ;
+    data: Score;
 
     judgeId: string;
     private sub: any;
@@ -26,15 +27,14 @@ export class PrelimniaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     ngAfterViewInit() {
         if (this.judgeId) {
-            this.searchApi.getScoreModule(this.judgeId).toPromise().then(value => {
-                this.data = value.contestants;
+            this.searchApi.getScoreModule(this.judgeId).toPromise().then(score => {
+                this.data = score;
             });
         }
     }
 
     async saveScore() {
-        console.log(this.data);
-        // await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
+        await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
     }
 
     ngOnDestroy() {

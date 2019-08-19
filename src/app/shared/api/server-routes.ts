@@ -7,6 +7,6 @@ export enum ServerRoutes {
     VERIFY = '/verify',
     RESEND_ACTIVATION_EMAIL = '/resendActivationEmail',
     LOGGED_IN = '/loggedin',
-    PRELIMINARY = '/preliminary',
+    SCORE = '/scores',
     SUMMARY = '/summary'
 }

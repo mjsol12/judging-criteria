@@ -11,7 +11,7 @@
                     [contextMenu]="true"
                     className= "htCenter"
                     stretchH="'all'"
-                    [data]="data"
+                    [data]="data && data.contestants ? data.contestants : []"
                     width = "100%"
                     height="600"
                     fixedColumnsLeft= '1'

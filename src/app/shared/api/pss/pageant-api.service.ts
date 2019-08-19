@@ -25,12 +25,12 @@ export class PageantApiService {
 
     getScoreModule(judgeId) {
         // get all proceduresx
-        return this.http.get<Score>(`${v1}${ServerRoutes.PRELIMINARY}`, {params: { id: judgeId}});
+        return this.http.get<Score>(`${v1}${ServerRoutes.SCORE}`, {params: { id: judgeId}});
     }
 
     saveScoreModule(score: Score, judgeId) {
         // get all proceduresx
-        return this.http.get<Score>(`${v1}${ServerRoutes.PRELIMINARY}`, {params: { id: judgeId}});
+        return this.http.post<Score>(`${v1}${ServerRoutes.SCORE}`, score , {params: { id: judgeId}});
     }
 
     // preliminary Candidates
