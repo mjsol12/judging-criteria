@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Candidate} from '../../model/pageant-procedure/candidate.model';
 import {ServerRoutes} from '../server-routes';
 import {Judge} from '../../model/pageant-procedure/judge.model';
+import {Score} from '../../model/pp/score.model';
 
 const env: any = environment;
 
@@ -20,6 +21,16 @@ export class PageantApiService {
     getJudge(userId) {
         // get all proceduresx
         return this.http.get<any>(`${v1}${ServerRoutes.JUDGE}`, {params: {id: userId}});
+    }
+
+    getScoreModule(judgeId) {
+        // get all proceduresx
+        return this.http.get<Score>(`${v1}${ServerRoutes.PRELIMINARY}`, {params: { id: judgeId}});
+    }
+
+    saveScoreModule(score: Score, judgeId) {
+        // get all proceduresx
+        return this.http.get<Score>(`${v1}${ServerRoutes.PRELIMINARY}`, {params: { id: judgeId}});
     }
 
     // preliminary Candidates

@@ -18,7 +18,8 @@ const {APP_PORT, SECURE_SESSION_KEY: SECRET_SESSION_KEY} = SystemConfig;
 // Server APIs
 const protectedRoutes = [
     require('./routers/pss/candidate.api'),
-    require('./routers/pss/judge.api')
+    require('./routers/pss/judge.api'),
+    require('./routers/pss/search.api')
 ];
 
 

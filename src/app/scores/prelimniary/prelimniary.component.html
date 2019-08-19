@@ -1,0 +1,51 @@
+<div class="container-fluid">
+    <div class="container pt-2">
+        <h3 class="mt-3">Preliminary Round</h3>
+        <button (click)="saveScore()">Save Scores</button>
+        <div class="border">
+            <hot-table
+                    #preliminaryHotTable
+                    rowHeights="40"
+                    [nestedHeaders]="nestedHeaders"
+                    [rowHeaders]="true"
+                    [contextMenu]="true"
+                    className= "htCenter"
+                    stretchH="'all'"
+                    [data]="data"
+                    width = "100%"
+                    height="600"
+                    fixedColumnsLeft= '1'
+                    [licenseKey]="'non-commercial-and-evaluation'">
+                <hot-column className= "htLeft"
+                            editor="false"
+                            data="CONTESTANT">
+                </hot-column>
+                <hot-column type="numeric"
+                            data="PRE_QA_CONTENT">
+                </hot-column>
+                <hot-column type="numeric"
+                            data="PRE_QA_CONCEPT">
+                </hot-column>
+                <hot-column  type="numeric"
+                             data="PRE_QA_IMPACT">
+                </hot-column>
+                <hot-column type="numeric"
+                            data="PRE_PO_POISE">
+                </hot-column>
+                <hot-column  type="numeric"
+                             data="PRE_PO_CARRIAGE">
+                </hot-column>
+                <hot-column  type="numeric"
+                             data="PRE_PO_BEAUTY">
+                </hot-column>
+                <hot-column  type="numeric"
+                             data="PRE_PO_IMPACT">
+                </hot-column>
+                <hot-column  type="numeric"
+                             data="PRE_ATTENDANCE">
+                </hot-column>
+            </hot-table>
+        </div>
+    </div>
+
+</div>

@@ -1,41 +1,69 @@
-import Account from '../../src/app/shared/model/account.model';
 import {insertDocuments} from '../services/DocumentService';
-import {Judge} from '../../src/app/shared/model/pageant-procedure/judge.model';
-import AccountService from '../services/AccountService';
+import {Score, Contestant, GENDER} from '../../src/app/shared/model/pp/score.model';
 const faker = require('faker');
 
 describe('_DocumentControllerSpec', function () {
-    it('should create new account with judge module', async function () {
-        const params = {firstname: faker.name.firstName(), lastname: faker.name.lastName(), username: 'user1', password: 'user1'};
-        await AccountService.register(params, {});
-    });
+    it('should insert a score model with contestant arrays', async function () {
 
-    // it('should insert a document for each system type. (This creates the necessary collections in the DB)', async function () {
-    //
-    //     const email = faker.internet.email();
-    //     const newAccount = new Account(email, faker.name.lastName(), faker.name.firstName());
-    //
-    //     const newJudge = new Judge();
-    //     newJudge.userId = newAccount.documentId;
-    //
-    //     newAccount.judgeModuleId = newJudge.documentId;
-    //
-    //     const docs = [
-    //         newAccount,
-    //         newJudge
-    //     ];
-    //
-    //     const toInsert = [];
-    //     for (const doc of docs) {
-    //         toInsert.push(doc);
-    //         toInsert.push({
-    //             systemHeader: {
-    //                 type: doc.systemHeader.type + '.archive'
-    //             }
-    //         });
-    //     }
-    //
-    //     await insertDocuments(toInsert, null, newAccount.documentId);
-    //
-    // });
+        const newScore1 = new Score('judge_1', 1);
+        const newScore2 = new Score('judge_2', 2);
+        const newScore3 = new Score('judge_3', 3);
+
+        const contestants = [
+            new Contestant(GENDER.Female, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0, 0),
+            new Contestant(GENDER.Male, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Female, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0),
+            new Contestant(GENDER.Male, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 , 0, 0 , 0 , 0, 0)
+        ];
+
+        newScore1.contestants = contestants;
+        newScore2.contestants = contestants;
+        newScore3.contestants = contestants;
+        const docs = [
+            newScore1,
+            newScore2,
+            newScore3,
+        ];
+        const toInsert = [];
+
+        for (const doc of docs) {
+            toInsert.push(doc);
+            toInsert.push({
+                systemHeader: {
+                    type: doc.systemHeader.type + '.archive'
+                }
+            });
+        }
+
+        await insertDocuments(toInsert, null, '1234-567-090');
+
+    });
 });

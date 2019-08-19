@@ -18,6 +18,9 @@ import {AuthenticationService} from './shared/auth-api/authentication.service';
 import {AuthGuard} from './shared/auth-api/auth-guard.service';
 import { ScoreComponent } from './score/score.component';
 import { SummaryComponent } from './summary/summary.component';
+import { PrelimniaryComponent } from './scores/prelimniary/prelimniary.component';
+import { FinalRoundComponent } from './scores/final-round/final-round.component';
+import { FinalQuestionAndAnswerComponent } from './scores/final-question-and-answer/final-question-and-answer.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +29,10 @@ import { SummaryComponent } from './summary/summary.component';
         FullLayoutComponent,
         ContentLayoutComponent,
         ScoreComponent,
-        SummaryComponent
+        SummaryComponent,
+        PrelimniaryComponent,
+        FinalRoundComponent,
+        FinalQuestionAndAnswerComponent
     ],
     imports: [
         BrowserModule,
