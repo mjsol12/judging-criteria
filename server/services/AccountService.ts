@@ -4,6 +4,8 @@ import {compare, hash} from '../utilities/HashHelper';
 import {v4 as uuid} from 'uuid';
 import Logger from '../utilities/Logger';
 import {InvalidRequestError, UnauthorizedError} from '../utilities/Errors';
+import {SampleJudgeGuide} from './SampleJudgeGuide';
+import {Judge} from '../../src/app/shared/model/pageant-procedure/judge.model';
 
 const fs = require('fs');
 const DocumentService = require('./DocumentService');
@@ -68,11 +70,18 @@ export default class AccountService {
     // check
     // create initial documents
     const account = new Account(username, lastname, firstname);
-    const accountSecurity = new AccountSecurity(account.documentId, <string>await hash(password));
+    const accountSecurity = new AccountSecurity(account.documentId,<string>await hash(password));
+
+    // sample Judge module
+    const judgeModule = new Judge(account.firstname);
+    judgeModule.userId = account.documentId;
+    account.judgeModuleId = judgeModule.documentId;
 
     account.username = username;
-      // do insert
-    const toInsert = [account, accountSecurity];
+    // set verified to true
+    account.systemHeader.accountVerified = true;
+    // do insert
+    const toInsert = [account, accountSecurity, judgeModule];
     await DocumentService.insertDocuments(toInsert, null, account.documentId);
   };
 
@@ -112,5 +121,7 @@ export default class AccountService {
         skip
       }
     );
-  };
-};
+  }
+}
+
+

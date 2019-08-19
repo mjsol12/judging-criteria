@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {FullLayoutComponent} from './layout/full-layout/full-layout.component';
-import {Full_ROUTES} from './shared/routes/full-layout.routes';
-import {LoginComponent} from './pages/content-layout/login/login.component';
+import {SummaryComponent} from './summary/summary.component';
+import {ScoreComponent} from './score/score.component';
 
 
 const routes: Routes = [
     {
-        path: 'login',
-        component: LoginComponent
+        path: 'score',
+        component: ScoreComponent
     },
     {
-        path: '',
-        component: FullLayoutComponent,
-        data: {title: 'full Views'},
-        children: Full_ROUTES,
+        path: 'summary',
+        component: SummaryComponent
+    },
+    {
+        path: '**',
+        redirectTo: 'score'
     },
 ];
 

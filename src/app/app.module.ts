@@ -14,13 +14,19 @@ import {PageantApiService} from './shared/api/pss/pageant-api.service';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthInterceptorService} from './shared/interceptors/auth-interceptor.service';
+import {AuthenticationService} from './shared/auth-api/authentication.service';
+import {AuthGuard} from './shared/auth-api/auth-guard.service';
+import { ScoreComponent } from './score/score.component';
+import { SummaryComponent } from './summary/summary.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         LoginComponent,
         FullLayoutComponent,
-        ContentLayoutComponent
+        ContentLayoutComponent,
+        ScoreComponent,
+        SummaryComponent
     ],
     imports: [
         BrowserModule,
@@ -32,6 +38,8 @@ import {AuthInterceptorService} from './shared/interceptors/auth-interceptor.ser
         HotTableModule.forRoot()
     ],
     providers: [
+        AuthenticationService,
+        AuthGuard,
         ApiService,
         {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     ],

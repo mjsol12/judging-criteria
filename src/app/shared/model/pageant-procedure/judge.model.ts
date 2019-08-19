@@ -91,6 +91,7 @@ class ProcedureMethodTemplate {
 export class Judge extends SystemDocument {
 
     public methodology: ProcedureMethodTemplate = new ProcedureMethodTemplate();
+    userId: string;
     constructor(public name?: string, public judgeNumber?: number) {
         super('Judge');
     }

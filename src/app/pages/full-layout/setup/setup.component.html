@@ -1,28 +1,37 @@
 <div class="container">
-    <form  (submit)="saveCandidate()" [formGroup]="candidateFormGroup">
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Full Name (Optional)</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="fullname">
+    <div class="card">
+        <div class="card-body">
+            <form (submit)="saveCandidate()" [formGroup]="candidateFormGroup">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="exampleFormControlInput1">Full Name (Optional)</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="fullname">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="exampleFormControlInput1">Candidate #</label>
+                        <input type="number" class="form-control" id="exampleFormControlInput1" formControlName="candidateNumber" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="exampleFormControlSelect1">Gender</label>
+                        <select class="form-control" id="exampleFormControlSelect1" formControlName="gender" required>
+                            <option>{{gender.Male}}</option>
+                            <option>{{gender.Female}}</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="exampleFormControlSelect1">Please select stage</label>
+                        <select class="form-control" id="exampleFormControlSelect1" formControlName="rankingStage" required>
+                            <option>{{rankingStage.PRELIMINARY}}</option>
+                            <option>{{rankingStage.FINALROUND}}</option>
+                            <option>{{rankingStage.QAFINAL}}</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlInput1">Candidate #</label>
-            <input type="number" class="form-control" id="exampleFormControlInput1" formControlName="candidateNumber" required>
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Gender</label>
-            <select class="form-control" id="exampleFormControlSelect1" formControlName="gender" required>
-                <option>{{gender.Male}}</option>
-                <option>{{gender.Female}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Please select stage</label>
-            <select class="form-control" id="exampleFormControlSelect1" formControlName="rankingStage" required>
-                <option>{{rankingStage.PRELIMINARY}}</option>
-                <option>{{rankingStage.FINALROUND}}</option>
-                <option>{{rankingStage.QAFINAL}}</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
+    </div>
 </div>

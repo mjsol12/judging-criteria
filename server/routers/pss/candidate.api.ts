@@ -7,9 +7,14 @@ import {insertDocuments} from '../../services/DocumentService';
 
 const router = express.Router();
 
+router.get(ServerRoutes.CANDIDATE, executeController(async (req, res) => {
+    // save every candidate,
+    const candidates = await RegisteredCandidateService.findCandidates();
+    res.status(200).send(candidates);
+}));
 router.post(ServerRoutes.CANDIDATE, executeController(async (req, res) => {
     // save every candidate,
-    await RegisteredCandidateService.savePreliminaryCandidate(req.body, '1231230-123=1231230123Fcker');
+    await RegisteredCandidateService.saveCandidate(req.body, req.body.documentId);
     res.status(200).send({msg: 'ok'});
 }));
 module.exports = router;

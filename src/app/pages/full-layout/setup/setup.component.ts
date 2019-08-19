@@ -40,7 +40,7 @@ export class SetupComponent implements OnInit, OnDestroy {
         const info = this.candidateFormGroup.getRawValue();
         const contestant = new Candidate(info.fullname, info.candidateNumber, info.gender, info.rankingStage);
 
-        this.candidateSubscription = this.pageantApiService.registerPreliminaryCandidate(contestant).subscribe(val => {
+        this.candidateSubscription = this.pageantApiService.registerStageCandidate(contestant).subscribe(val => {
             this.toastrService.success(`Successfull Added to ${info.rankingStage}`);
         }, error2 => {
             this.toastrService.error( error2.message , 'Failed Response Server');

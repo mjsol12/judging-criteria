@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthenticationService} from '../../shared/auth-api/authentication.service';
 
 @Component({
     selector: 'app-full-layout',
@@ -9,9 +10,12 @@ export class FullLayoutComponent implements OnInit {
 
     public isCollapsed = true;
 
-    constructor() { }
+    constructor(private authService: AuthenticationService) { }
 
     ngOnInit() {
     }
 
+    logout(route) {
+            this.authService.logout();
+    }
 }

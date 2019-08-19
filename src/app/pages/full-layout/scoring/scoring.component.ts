@@ -3,6 +3,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {PageantApiService} from '../../../shared/api/pss/pageant-api.service';
 import {Candidate, Gender, RankingStage} from '../../../shared/model/pageant-procedure/candidate.model';
 import {NgbTabsetConfig} from '@ng-bootstrap/ng-bootstrap';
+import {AuthenticationService} from '../../../shared/auth-api/authentication.service';
 
 @Component({
     selector: 'app-scoring',
@@ -16,7 +17,11 @@ export class ScoringComponent implements OnInit, AfterViewInit {
     columns: any;
     datas: any;
 
-    constructor(private psApi: PageantApiService, private config: NgbTabsetConfig) {
+    constructor(
+        private psApi: PageantApiService,
+        private config: NgbTabsetConfig,
+        private authServ: AuthenticationService
+        ) {
         config.justify = 'center';
     }
 
@@ -29,7 +34,8 @@ export class ScoringComponent implements OnInit, AfterViewInit {
      }
 
     async preJudge() {
-        const pageantJudging = await this.psApi.getJudge().toPromise();
+        const loggedInUser = this.authServ.loggedInAccount;
+        const pageantJudging = await this.psApi.getJudge(loggedInUser.documentId).toPromise();
         this.nestedHeaders = pageantJudging.nestedHeaders;
         this.columns = pageantJudging.columnDataTypes;
         this.datas = pageantJudging.datas;
@@ -37,7 +43,7 @@ export class ScoringComponent implements OnInit, AfterViewInit {
 
     registerCandidate() {
         const preliCandidate = new Candidate('Mark Jones', 1, Gender.Male, RankingStage.FINALROUND);
-        this.psApi.registerPreliminaryCandidate(preliCandidate).subscribe(val => console.log(val));
+        this.psApi.registerStageCandidate(preliCandidate).subscribe(val => console.log(val));
     }
 }
 

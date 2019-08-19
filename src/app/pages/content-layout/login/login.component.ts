@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Router} from '@angular/router';
 import {RouterClient} from '../../../shared/routes/router.model';
 import {ApiService} from '../../../shared/api/api.service';
+import {AuthenticationService} from '../../../shared/auth-api/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -29,12 +30,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         private api: ApiService,
         private router: Router,
         private fb: FormBuilder,
-        private toastrService: ToastrService
+        private toastrService: ToastrService,
+        private authentication: AuthenticationService
     ) {
     }
 
     ngOnInit() {
-        this.api.logout(true);
+        this.api.logout();
         this.loginForm = this.fb.group({
             email: '',
             password: '',
@@ -67,8 +69,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         try {
             const account = await this.api.login(this.loginForm.get('email').value, this.loginForm.get('password').value).toPromise();
             this.submitSuccess();
-            this.api.setLogin(account);
-            this.router.navigate([RouterClient.SETUP]);
+            this.authentication.login(account);
+            this.router.navigate([RouterClient.SCORING]);
         } catch (err) {
             this.submitFailed();
             this.loginFailed(err, 'Invalid username or password.');

@@ -29,7 +29,7 @@ export function iterateCriteria(candidate: Candidate, stage ) {
     stage.candidates = stage.candidates.concat([contestant]);
 }
 
-export async function addCandidatesToJudges(candidate: Candidate, judges) {
+export async function addCandidatesToJudges(candidate: Candidate, judges , userId ) {
 
     for (const judge of judges) {
 
@@ -52,7 +52,7 @@ export async function addCandidatesToJudges(candidate: Candidate, judges) {
             }
         }
 
-        await DocumentService.updateDocument(judge, '1231230-123=1231230123Fcker');
+        await DocumentService.updateDocument(judge, userId);
     }
 
     return true;
@@ -66,7 +66,7 @@ export module RegisteredCandidateService {
         return await DocumentService.find(Candidate, {});
     }
 
-    export async function savePreliminaryCandidate(candidate: Candidate, userId): Promise<any> {
+    export async function saveCandidate(candidate: Candidate, userId): Promise<any> {
         const filter = {
             candidateNumber: candidate.candidateNumber,
             gender: candidate.gender,
@@ -80,10 +80,10 @@ export module RegisteredCandidateService {
 
         const judges = await DocumentService.find(Judge, {});
 
-        await addCandidatesToJudges(candidate, judges);
+        await addCandidatesToJudges(candidate, judges, userId);
 
         // if found candidate do return invalid already have the candidate number
-        const insertCandidate = DocumentService.insertDocuments(candidate, null, '1231230-123=1231230123Fcker');
+        const insertCandidate = DocumentService.insertDocuments(candidate, null,  userId);
 
         return Promise.all([insertCandidate]);
     }

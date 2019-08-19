@@ -2,7 +2,6 @@ export enum RouterClient {
     LOGIN = 'login',
     REGISTER = 'register',
     SCORING = 'scoring',
-    SUMMARY = 'summary',
     SETUP = 'setup',
 }
 
