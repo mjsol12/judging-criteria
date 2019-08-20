@@ -40,7 +40,7 @@ export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy{
       try {
           await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
           this.toastr.success('Saved Changes');
-      }catch (e) {
+      } catch (e) {
           this.toastr.error(e);
       }
   }
@@ -58,7 +58,8 @@ export const finalRoundTable = {
         [   '',
             {label: 'School Uniform', colspan: 3},
             {label: 'Sports Wear', colspan: 4},
-            {label: 'Creative Costume', colspan: 4}
+            {label: 'Creative Costume', colspan: 4},
+            ''
         ],
         [   'Candidate <br> <span style="font-size: 10px">#</span>',
 
@@ -74,7 +75,8 @@ export const finalRoundTable = {
             'Concept <br><span style="font-size: 10px;"> 40</span>',
             'Poise and Bearing <br> <spa style="font-size: 10px">25</spa>',
             'Carriage <br> <spa style="font-size: 10px">20</spa>',
-            'Beauty <br> <spa style="font-size: 10px">15</spa>'
+            'Beauty <br> <spa style="font-size: 10px">15</spa>',
+            ''
         ]
     ]
-};
+}
