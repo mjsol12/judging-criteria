@@ -1,6 +1,7 @@
 import * as DocumentService from '../DocumentService';
 import {Score} from '../../../src/app/shared/model/pp/score.model';
 import {InvalidRequestError} from '../../utilities/Errors';
+import {Candidate} from '../../../src/app/shared/model/pageant-procedure/candidate.model';
 
 export module SearchService {
     export async function findScoreModule(userId) {
@@ -58,11 +59,45 @@ export module SearchService {
     }
 
     export async function summaryScore(userId) {
-        const Scores = await DocumentService.find(Score, {});
+        const scores = await DocumentService.find(Score, {});
 
-        const Summary = [];
+        let summary = [];
 
-        return [Scores];
+        for (const score of scores) {
+
+            const candidates = [];
+
+            for (const candidate of score.contestants) {
+
+                const finalScore = Object.create({});
+
+                finalScore.CANDIDATE = candidate.CONTESTANT;
+
+                if (score.userId === 'judge_1') {
+                    finalScore.JUDGE1_PRELIMINARY_SCORE = candidate.PRELIMINARY_SCORE;
+                    finalScore.JUDGE1_FINALROUND_SCORE = candidate.FINALROUND_SCORE;
+                    finalScore.JUDGE1_QAFINAL_SCORE = candidate.QAFINAL_SCORE;
+                }
+
+                if (score.userId === 'judge_2') {
+                    finalScore.JUDGE2_PRELIMINARY_SCORE = candidate.PRELIMINARY_SCORE;
+                    finalScore.JUDGE2_FINALROUND_SCORE = candidate.FINALROUND_SCORE;
+                    finalScore.JUDGE2_QAFINAL_SCORE = candidate.QAFINAL_SCORE;
+                }
+
+                if (score.userId === 'judge_3') {
+                    finalScore.JUDGE3_PRELIMINARY_SCORE = candidate.PRELIMINARY_SCORE;
+                    finalScore.JUDGE3_FINALROUND_SCORE = candidate.FINALROUND_SCORE;
+                    finalScore.JUDGE3_QAFINAL_SCORE = candidate.QAFINAL_SCORE;
+                }
+
+                candidates.push(finalScore);
+            }
+
+            summary = summary.concat(candidates);
+        }
+
+        return [scores, summary];
     }
 }
 

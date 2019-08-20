@@ -23,6 +23,11 @@ export class PageantApiService {
         return this.http.get<any>(`${v1}${ServerRoutes.JUDGE}`, {params: {id: userId}});
     }
 
+    getSummary(judgeId) {
+        // get all proceduresx
+        return this.http.get<any>(`${v1}${ServerRoutes.SUMMARY}`, {params: { id: judgeId}});
+    }
+
     getScoreModule(judgeId) {
         // get all proceduresx
         return this.http.get<Score>(`${v1}${ServerRoutes.SCORE}`, {params: { id: judgeId}});

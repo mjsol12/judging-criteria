@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
 import 'rxjs/add/operator/filter';
 import {Score} from '../../shared/model/pp/score.model';
+import {ToastrService} from 'ngx-toastr';
 @Component({
     selector: 'app-prelimniary',
     templateUrl: './prelimniary.component.html',
@@ -15,7 +16,7 @@ export class PrelimniaryComponent implements OnInit, AfterViewInit, OnDestroy {
 
     judgeId: string;
     private sub: any;
-    constructor(private route: ActivatedRoute, private searchApi: PageantApiService) { }
+    constructor(private route: ActivatedRoute, private toastr: ToastrService, private searchApi: PageantApiService) { }
 
     ngOnInit() {
         // sample url
@@ -34,7 +35,12 @@ export class PrelimniaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     async saveScore() {
-        await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
+        try {
+            await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
+            this.toastr.success('Changes saved');
+        } catch (e) {
+            this.toastr.error(e);
+        }
     }
 
     ngOnDestroy() {

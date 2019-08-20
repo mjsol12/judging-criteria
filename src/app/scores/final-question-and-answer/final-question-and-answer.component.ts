@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
 import {Score} from '../../shared/model/pp/score.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-final-question-and-answer',
@@ -14,7 +15,7 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
 
     judgeId: string;
     private sub: any;
-    constructor(private route: ActivatedRoute, private searchApi: PageantApiService) {
+    constructor(private route: ActivatedRoute, private toastr: ToastrService, private searchApi: PageantApiService) {
     }
 
     ngOnInit() {
@@ -35,8 +36,12 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
     }
 
     async saveScore() {
-        console.log(this.data);
-        // await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
+        try {
+            await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
+            this.toastr.success('Changes saved');
+        } catch (e) {
+            this.toastr.error(e);
+        }
     }
 
     ngOnDestroy() {
