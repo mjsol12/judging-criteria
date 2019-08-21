@@ -23,11 +23,6 @@ export class PageantApiService {
         return this.http.get<any>(`${v1}${ServerRoutes.JUDGE}`, {params: {id: userId}});
     }
 
-    getSummary(judgeId) {
-        // get all proceduresx
-        return this.http.get<any>(`${v1}${ServerRoutes.SUMMARY}`, {params: { id: judgeId}});
-    }
-
     getScoreModule(judgeId) {
         // get all proceduresx
         return this.http.get<Score>(`${v1}${ServerRoutes.SCORE}`, {params: { id: judgeId}});
@@ -36,6 +31,17 @@ export class PageantApiService {
     saveScoreModule(score: Score, judgeId) {
         // get all proceduresx
         return this.http.post<Score>(`${v1}${ServerRoutes.SCORE}`, score , {params: { id: judgeId}});
+    }
+
+
+    getSummary(judgeId) {
+        // get all proceduresx
+        return this.http.get<any[]>(`${v1}${ServerRoutes.SUMMARY}`, {params: { id: judgeId}});
+    }
+
+    getSaveSummary(summary , adminId) {
+        // get all proceduresx
+        return this.http.post<any[]>(`${v1}${ServerRoutes.SUMMARY}`, summary, {params: { id: adminId}});
     }
 
     // preliminary Candidates
