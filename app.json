@@ -1,12 +1,12 @@
 {
   "apps" : [
     {
-      "name"  :   "pageantsystem",
-      "script"    :   "dist-server/server/psmiles.app.js",
+      "name"  :   "scoreboard",
+      "script"    :   "dist-server/server/psearch.app.js",
       "watch"       : false,
       "exec_mode" :   "cluster",
-      "instances" :   "max",
-      "max_memory_restart"    :   "1024M",
+      "instances" :   "1",
+      "max_memory_restart"    :   "256M",
       "merge_logs"    :   true,
       "env":  {
         "NODE_ENV": "production"
