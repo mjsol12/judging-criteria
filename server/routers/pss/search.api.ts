@@ -24,5 +24,11 @@ router.get(`${ServerRoutes.SUMMARY}`, executeController(async (req, res) => {
     const results = await SearchService.summaryScore( userId);
     res.status(200).send(results);
 }));
+// attendance Summary
+router.post(`${ServerRoutes.SUMMARY}`, executeController(async (req, res) => {
+    const userId = req.query.id;
+    const results = await SearchService.summarySaveChanges(req.body, userId);
+    res.status(200).send(results);
+}));
 
 module.exports = router;

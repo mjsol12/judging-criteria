@@ -26,11 +26,9 @@ export class PrelimniaryComponent implements OnInit, AfterViewInit, OnDestroy {
              this.judgeId = params['judge'];
         });
     }
-    ngAfterViewInit() {
+    async ngAfterViewInit() {
         if (this.judgeId) {
-            this.searchApi.getScoreModule(this.judgeId).toPromise().then(score => {
-                this.data = score;
-            });
+            this.data = await this.searchApi.getScoreModule(this.judgeId).toPromise();
         }
     }
 
