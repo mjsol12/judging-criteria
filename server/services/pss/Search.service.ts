@@ -1,7 +1,7 @@
 import * as DocumentService from '../DocumentService';
 import {Score} from '../../../src/app/shared/model/pp/score.model';
 import {InvalidRequestError, UnauthorizedError} from '../../utilities/Errors';
-import {Gender} from '../../../src/app/shared/model/pageant-procedure/candidate.model';
+import {allSettled} from 'q';
 
 function calculatePreliminaryRound(contestant) {
     // preliminary
@@ -58,26 +58,31 @@ function groupBy(arr, property) {
 
 function rankingCategory(summary) {
     const categorical = groupBy(summary, 'category');
-    const boys = categorical.male;
+
+    let allsum = [];
     // // rank to preliminary\z
-    boys.sort((a , b) => {
+    const boys = categorical.male.sort((a , b) => {
         return a.PRELIMINARY_SCORE - b.PRELIMINARY_SCORE;
-    }).forEach((val, index) => {
+    });
+    boys.forEach((val, index) => {
         val.preliminaryRank = index + 1;
     });
 
-
-    const girls = categorical.female;
-    girls.sort((a , b) => {
+    const girls = categorical.female.sort((a , b) => {
         return a.PRELIMINARY_SCORE - b.PRELIMINARY_SCORE;
-    }).forEach((val, index) => {
+    });
+    girls.forEach((val, index) => {
         val.preliminaryRank = index + 1;
     });
 
-    summary = [girls].concat(boys);
-    summary.sort((a, b) => {
+    allsum = boys.concat(girls);
+
+    allsum.sort((a, b) => {
         return a.CONTESTANT - b.CONTESTANT;
     });
+    allsum = summary;
+
+    return allsum;
 }
 export module SearchService {
     export async function findScoreModule(userId) {
@@ -168,7 +173,7 @@ export module SearchService {
             summary = summary.length > 0 ? partialSummary : summary.concat(candidates);
         }
 
-        rankingCategory(summary);
+        summary = rankingCategory(summary);
         return summary;
     }
 
