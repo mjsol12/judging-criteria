@@ -22,7 +22,7 @@ function calculateFinalRound(contestant) {
     contestant.FINAL_ROUND_SCORE = apFinalScore / 3;
 
     // q and a final
-    contestant.QA_SCORE = contestant.QA_CONCEPT + contestant.QA_CONTENT + contestant.QA_IMPACT;
+    contestant.QA_SCORE = contestant.QA_INTELLIGENCE + contestant.QA_BEAUTY ;
 
     return contestant;
 }
@@ -52,6 +52,9 @@ function judgesTotalScores(categories) {
         // final round score
         const addedScores = m.JUDGE1_FINAL_ROUND_SCORE + m.JUDGE2_FINAL_ROUND_SCORE + m.JUDGE3_FINAL_ROUND_SCORE;
         m.FINAL_ROUND_SCORE = addedScores / numberOfJudges;
+        // question and answer score
+        const qASum = m.JUDGE1_QA_SCORE + m.JUDGE2_QA_SCORE + m.JUDGE3_QA_SCORE;
+        m.QA_SCORE = qASum / numberOfJudges;
     }
 
     return categories;
@@ -84,8 +87,9 @@ function rankingCategory(categories) {
     const doneSUtoSW = rankScore(catogory, 'SCHOOL_UNIFORM_RANK', 'SCHOOL_UNIFORM_SCORE');
     const dontSWtoCC = rankScore(doneSUtoSW, 'SPORTS_WEAR_RANK', 'SPORTS_WEAR_SCORE');
     const doneCCtoFR = rankScore(dontSWtoCC, 'CREATIVE_COSTUME_RANK', 'CREATIVE_COSTUME_SCORE');
+    const doneAll = rankScore(doneCCtoFR, 'QA_RANK', 'QA_SCORE');
 
-    let finalRank = rankScore(doneCCtoFR, 'FINAL_ROUND_RANK', 'FINAL_ROUND_SCORE');
+    let finalRank = rankScore(doneAll, 'FINAL_ROUND_RANK', 'FINAL_ROUND_SCORE');
     finalRank = finalRank.sort((a, b) => {
         return a.CANDIDATE_NUMBER - b.CANDIDATE_NUMBER;
     });

@@ -41,6 +41,8 @@ export class Contestant {
         public QA_CONCEPT?: number,
         public QA_CONTENT?: number,
         public QA_IMPACT?: number,
+        public QA_INTELLIGENCE?: number,
+        public QA_BEAUTY?: number,
         ) {
     }
 }

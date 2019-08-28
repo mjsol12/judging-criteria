@@ -22,14 +22,10 @@
                                             width = "100%"
                                             height="600"
                                             [dataSchema]="contestantSample"
-                                            [fixedColumnsLeft]="2"
+                                            [fixedColumnsLeft]="1"
                                             [licenseKey]="'non-commercial-and-evaluation'">
-                                        <hot-column className="htLeft"
-                                                    type="dropdown"
-                                                    [source]="[gender.Male, gender.Female]"
-                                                    data="CATEGORY">
-                                        </hot-column>
-                                        <hot-column className= "htLeft"
+                                        <hot-column className= "htCenter"
+                                                    [editor]="false"
                                                     data="CANDIDATE_NUMBER">
                                         </hot-column>
                                         <hot-column  type="numeric"

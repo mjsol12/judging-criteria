@@ -88,10 +88,10 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
 export const finaleQATable = {
     nestedHeaders: [
         [
-            '<span style="font-size: 10px">#</span>',
-            'Conceptualization of Thoughts <br><span style="font-size: 10px;"> Delivery and Choice of Words - 50</span>',
-            'Content <br> <span style="font-size: 10px">30</span>',
-            'Impact <br> <spa style="font-size: 10px">20</spa>',
+            'Candidate <br><span style="font-size: 10px">#</span></br>',
+            'Intelligence <br><span style="font-size: 10px;">50</span>',
+            'Beauty <br> <span style="font-size: 10px">50</span>'
         ]
     ]
 };
+

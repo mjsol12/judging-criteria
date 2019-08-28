@@ -96,26 +96,26 @@ export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy {
 // Format final round sample
 export const finalRoundTable = {
     nestedHeaders: [
-        [   {label: 'Contestant', colspan: 2},
+        [   {label: '', colspan: 1},
             {label: 'School Uniform', colspan: 3},
             {label: 'Sports Wear', colspan: 4},
             {label: 'Creative Costume', colspan: 4},
             ''
         ],
-        [   '',
-            '<br>Candidate <span style="font-size: 10px">#</span>',
+        [
+            'Candidate <br> <span style="font-size: 10px">#</span>',
 
             'Personality <br> <spa style="font-size: 10px">50</spa>',
-            'Poise and Bearing <br> <spa style="font-size: 10px">30</spa>',
+            'Poise & Bearing <br> <spa style="font-size: 10px">30</spa>',
             'Carriage <br> <spa style="font-size: 10px">20</spa>',
 
-            'Poise and Bearing <br> <spa style="font-size: 10px">40</spa>',
+            'Poise & Bearing <br> <spa style="font-size: 10px">40</spa>',
             'Carriage <br> <spa style="font-size: 10px">30</spa>',
             'Figure <br> <spa style="font-size: 10px">20</spa>',
             'Sports Identity <br> <spa style="font-size: 10px">10</spa>',
 
             'Concept <br><span style="font-size: 10px;"> 40</span>',
-            'Poise and Bearing <br> <spa style="font-size: 10px">25</spa>',
+            'Poise & Bearing <br> <spa style="font-size: 10px">25</spa>',
             'Carriage <br> <spa style="font-size: 10px">20</spa>',
             'Beauty <br> <spa style="font-size: 10px">15</spa>',
             ''
