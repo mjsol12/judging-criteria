@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +13,7 @@ export class HomeComponent implements OnInit {
     judge1QA: string;
     judge2QA: string;
     judge3QA: string;
-    links = [];
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() {
       const parsedUrl = new URL(window.location.href);
