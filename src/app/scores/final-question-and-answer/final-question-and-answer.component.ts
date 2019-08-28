@@ -75,7 +75,17 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
             this.toastr.error(e);
         }
     }
-
+    candidateRenderer(instance, td, row, col, prop, value, cellProperties) {
+        if (value != null || (value && value.trim &&  value.trim() !== '')) {
+            td.style.fontWeight = 'bold';
+            td.style.textAlign = 'center';
+            td.style.fontSize = '16px';
+            td.innerText = `${value}`;
+        } else {
+            td.innerText = '';
+        }
+        return td;
+    }
     ngOnDestroy() {
         if (this.sub) {
             this.sub.unsubscribe();

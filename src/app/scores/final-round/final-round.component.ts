@@ -68,6 +68,18 @@ export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy {
         }
     }
 
+    candidateRenderer(instance, td, row, col, prop, value, cellProperties) {
+        if (value != null || (value && value.trim &&  value.trim() !== '')) {
+            td.style.fontWeight = 'bold';
+            td.style.textAlign = 'center';
+            td.style.fontSize = '16px';
+            td.innerText = `${value}`;
+        } else {
+            td.innerText = '';
+        }
+        return td;
+    }
+
     groupBy(arr, property) {
         return arr.reduce((memo, x) => {
             if (!memo[x[property]]) { memo[x[property]] = []; }

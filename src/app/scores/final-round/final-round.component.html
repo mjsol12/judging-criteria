@@ -18,15 +18,15 @@
                                             [rowHeaders]="true"
                                             [contextMenu]="true"
                                             className= "htCenter"
-                                            stretchH="'all'"
+                                            stretchH="all"
                                             [data]="tab.scores"
-                                            width = "100%"
                                             height="600"
                                             [dataSchema]="contestantSample"
                                             [fixedColumnsLeft]="1"
                                             [licenseKey]="'non-commercial-and-evaluation'">
                                         <hot-column className= "htCenter"
                                                     [editor]="false"
+                                                    [renderer]="candidateRenderer"
                                                     data="CANDIDATE_NUMBER">
                                         </hot-column>
                                         <hot-column  type="numeric"

@@ -47,7 +47,20 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
 
     scoreRenderer(instance, td, row, col, prop, value, cellProperties) {
         if (value != null || (value && value.trim &&  value.trim() !== '')) {
+            td.style.textAlign = 'center';
             td.innerText = `${value.toFixed(2)}` || '0';
+        } else {
+            td.innerText = '';
+        }
+        return td;
+    }
+
+    candidateRenderer(instance, td, row, col, prop, value, cellProperties) {
+        if (value != null || (value && value.trim &&  value.trim() !== '')) {
+            td.style.fontWeight = 'bold';
+            td.style.textAlign = 'center';
+            td.style.fontSize = '16px';
+            td.innerText = `${value}`;
         } else {
             td.innerText = '';
         }

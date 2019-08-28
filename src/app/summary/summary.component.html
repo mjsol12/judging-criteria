@@ -14,11 +14,11 @@
                                     <div class="border">
                                         <hot-table
                                                 #summaryHotTable
-                                                rowHeights="40"
+                                                rowHeights="45"
                                                 [nestedHeaders]="tab.header"
                                                 [rowHeaders]="true"
                                                 [contextMenu]="true"
-                                                className= "htCenter"
+                                                className= "htLeft"
                                                 stretchH="all"
                                                 [data]="tab.scores"
                                                 height="600"
@@ -26,6 +26,7 @@
                                                 [licenseKey]="'non-commercial-and-evaluation'">
                                             <hot-column className= "htCenter"
                                                         [editor]="false"
+                                                        [renderer]="candidateRenderer"
                                                         data="CANDIDATE_NUMBER">
                                             </hot-column>
                                             <!--<SCHOOL_UNIFORM_SCORE-->
@@ -47,6 +48,7 @@
                                                          data="SCHOOL_UNIFORM_SCORE">
                                             </hot-column>
                                             <hot-column  type="numeric"
+                                                         className= "htCenter"
                                                          [editor]="false"
                                                          data="SCHOOL_UNIFORM_RANK">
                                             </hot-column>
@@ -66,11 +68,13 @@
                                             </hot-column>
                                             <hot-column  type="numeric"
                                                          [editor]="false"
+                                                         className= "htCenter"
                                                          [renderer]="scoreRenderer"
                                                          data="SPORTS_WEAR_SCORE">
                                             </hot-column>
                                             <hot-column  type="numeric"
                                                          [editor]="false"
+                                                         className= "htCenter"
                                                          data="SPORTS_WEAR_RANK">
                                             </hot-column>
                                             <!--end of SPORTS_WEAR_SCORE > -->
@@ -89,11 +93,13 @@
                                             </hot-column>
                                             <hot-column  type="numeric"
                                                          [editor]="false"
+                                                         className= "htCenter"
                                                          [renderer]="scoreRenderer"
                                                          data="CREATIVE_COSTUME_SCORE">
                                             </hot-column>
                                             <hot-column  type="numeric"
                                                          [editor]="false"
+                                                         className= "htCenter"
                                                          data="CREATIVE_COSTUME_RANK">
                                             </hot-column>
                                             <!--end of CREATIVE_COSTUME_SCORE > -->
@@ -115,11 +121,13 @@
                                             </hot-column>
                                             <hot-column  type="numeric"
                                                          [editor]="false"
+                                                         className= "htCenter"
                                                          [renderer]="scoreRenderer"
                                                          data="FINAL_ROUND_SCORE">
                                             </hot-column>
                                             <hot-column  type="numeric"
                                                          [editor]="false"
+                                                         className= "htCenter"
                                                          data="FINAL_ROUND_RANK">
                                             </hot-column>
                                             <!--end of finalRound > -->
@@ -131,7 +139,7 @@
                     </div>
                 </ng-template>
             </ngb-tab>
-            <ngb-tab title="Question And Answer">
+            <ngb-tab title="Question & Answer">
                 <ng-template ngbTabContent>
                     <div class="mt-1">
                         <ngb-tabset type="pills">
