@@ -7,6 +7,8 @@ describe('_DocumentControllerSpec', function () {
         const newScore1 = new Score('judge_1', 1);
         const newScore2 = new Score('judge_2', 2);
         const newScore3 = new Score('judge_3', 3);
+        const newScore4 = new Score('judge_3', 4);
+        const newScore5 = new Score('judge_3', 5);
 
         const contestants = [
             new Contestant(GENDER.Female, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -30,10 +32,14 @@ describe('_DocumentControllerSpec', function () {
         newScore1.contestants = contestants;
         newScore2.contestants = contestants;
         newScore3.contestants = contestants;
+        newScore4.contestants = contestants;
+        newScore5.contestants = contestants;
         const docs = [
             newScore1,
             newScore2,
             newScore3,
+            newScore4,
+            newScore5
         ];
         const toInsert = [];
 
