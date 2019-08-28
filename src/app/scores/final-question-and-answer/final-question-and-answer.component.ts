@@ -3,7 +3,9 @@ import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
 import {Score} from '../../shared/model/pp/score.model';
 import {ToastrService} from 'ngx-toastr';
+import {ScoringTabUI} from '../final-round/final-round.component';
 import {Gender} from '../../shared/model/pageant-procedure/candidate.model';
+
 
 @Component({
   selector: 'app-final-question-and-answer',
@@ -11,8 +13,9 @@ import {Gender} from '../../shared/model/pageant-procedure/candidate.model';
   styleUrls: ['./final-question-and-answer.component.css']
 })
 export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, OnDestroy {
-    nestedHeaders = finaleQATable.nestedHeaders ;
+    scoringTabUi: ScoringTabUI[];
     scores: Score;
+    nestedHeaders = finaleQATable.nestedHeaders ;
 
     judgeId: string;
     private sub: any;
@@ -25,10 +28,43 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
         });
 
     }
-    ngAfterViewInit() {
-        this.searchApi.getScoreModule(this.judgeId).toPromise().then(score => {
-            this.scores = score;
+    async ngAfterViewInit() {
+        this.initViews();
+    }
+
+    async initViews() {
+        try {
+            this.scores = await this.searchApi.getScoreModule(this.judgeId).toPromise();
+
+            const category = this.groupBy(this.scores.contestants, 'CATEGORY');
+
+            const female = this.returnTopRanks(category.female);
+            const male = this.returnTopRanks(category.male);
+            this.scoringTabUi = [
+                new ScoringTabUI('Ms.', this.nestedHeaders, Gender.Female, female),
+                new ScoringTabUI('Mr.', this.nestedHeaders, Gender.Female, male),
+            ];
+        } catch (e) {
+            this.toastr.error(e, 'ERROR');
+        }
+    }
+
+    returnTopRanks(arr) {
+        return arr.filter((val) => {
+            if (val.FINAL_ROUND_RANK <= 4 ) {
+                return true;
+            } else {
+                return false;
+            }
         });
+    }
+
+    groupBy(arr, property) {
+        return arr.reduce((memo, x) => {
+            if (!memo[x[property]]) { memo[x[property]] = []; }
+            memo[x[property]].push(x);
+            return memo;
+        }, {});
     }
 
     async saveScore() {
@@ -51,7 +87,7 @@ export class FinalQuestionAndAnswerComponent implements OnInit, AfterViewInit, O
 // Format Preliminary sample
 export const finaleQATable = {
     nestedHeaders: [
-        [   'Category',
+        [
             '<span style="font-size: 10px">#</span>',
             'Conceptualization of Thoughts <br><span style="font-size: 10px;"> Delivery and Choice of Words - 50</span>',
             'Content <br> <span style="font-size: 10px">30</span>',

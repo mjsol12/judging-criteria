@@ -55,15 +55,39 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     async ngAfterViewInit() {
-      try {
-          this.data = await this.getSummary();
-          this.finalRoundTabUI = [
-              new ScoresTabUI('FEMALE', this.nestedHeaders, Gender.Female, this.data.female),
-              new ScoresTabUI('MALE', this.nestedHeaders,  Gender.Female, this.data.male),
-          ];
-      } catch (e) {
-          this.toastr.error(e, 'Error Server');
-      }
+        await this.initScores();
+    }
+
+    async initScores() {
+        try {
+            this.data = await this.getSummary();
+
+            this.finalRoundTabUI = [
+                new ScoresTabUI('Ms.', this.nestedHeaders, Gender.Female, this.data.finalMsRanks),
+                new ScoresTabUI('Mr.', this.nestedHeaders,  Gender.Female, this.data.finalMrRanks),
+            ];
+
+            const female = this.returnTopRanks(this.data.finalMsRanks);
+            const male = this.returnTopRanks(this.data.finalMrRanks);
+            this.questionAndAnswerTabUi = [
+                new ScoresTabUI('Ms.', this.nestedHeaders, Gender.Female, female),
+                new ScoresTabUI('Mr.', this.nestedHeaders,  Gender.Female, male),
+
+            ];
+
+        } catch (e) {
+            this.toastr.error(e, 'Error Server');
+        }
+    }
+
+    returnTopRanks(arr) {
+        return arr.filter((val) => {
+            if (val.FINAL_ROUND_RANK <= 4 ) {
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     async getSummary() {
@@ -71,6 +95,12 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
             return this.searchApi.getSummary(this.adminId).toPromise();
         }
         return;
+    }
+
+    updateForQA() {
+      this.searchApi.saveSummary(this.data, this.adminId).subscribe(val => {
+          this.toastr.success('saved to server', 'Succcess');
+      });
     }
 
     ngOnDestroy() {
@@ -137,12 +167,13 @@ export const qASummaryTable = {
     nestedHeaders: [
         [   '',
             {label: 'Judge', colspan: 3},
-            'Rank'
+            {label: 'Rank', colspan: 2}
         ],
         [   'Candidate <br> <span style="font-size: 10px">#</span>',
             '1',
             '2',
             '3 ',
+            'Final Score',
             '#',
             ''
         ]

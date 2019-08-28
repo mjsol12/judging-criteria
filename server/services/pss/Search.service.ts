@@ -57,76 +57,42 @@ function judgesTotalScores(categories) {
     return categories;
 }
 
-function rankScore(categories) {
+function rankScore(categories, rankPropertyName, scorePropertyName) {
 
-    const rankSU = categories.sort((a, b) => {
-        if (a.SCHOOL_UNIFORM_SCORE < b.SCHOOL_UNIFORM_SCORE ) {
-            return 1;
-        }
-        if (a.SCHOOL_UNIFORM_SCORE > b.SCHOOL_UNIFORM_SCORE) {
-            return -1;
-        }
-        // a must be equal to b
-        return 0;
-    });
-    const rankSW = categories.sort((a, b) => {
-        if (a.SPORTS_WEAR_SCORE < b.SPORTS_WEAR_SCORE ) {
-            return 1;
-        }
-        if (a.SPORTS_WEAR_SCORE > b.SPORTS_WEAR_SCORE) {
-            return -1;
-        }
-        // a must be equal to b
-        return 0;
-    });
-    const rankCC = categories.sort((a, b) => {
-        if (a.CREATIVE_COSTUME_SCORE < b.CREATIVE_COSTUME_SCORE ) {
-            return 1;
-        }
-        if (a.CREATIVE_COSTUME_SCORE > b.CREATIVE_COSTUME_SCORE) {
-            return -1;
-        }
-        // a must be equal to b
-        return 0;
-    });
-    const rankFR = categories.sort((a, b) => {
-        if (a.FINAL_ROUND_SCORE < b.FINAL_ROUND_SCORE ) {
-            return 1;
-        }
-        if (a.FINAL_ROUND_SCORE > b.FINAL_ROUND_SCORE) {
-            return -1;
-        }
-        // a must be equal to b
-        return 0;
-    });
+    const propertyRank = rankPropertyName;
+    const propertyScore = scorePropertyName;
 
+    const ranking = categories.sort(( a, b ) => {
+        if (a[propertyScore] < b[propertyScore]) {
+            return 1;
+        }
+        if (a[propertyScore] > b[propertyScore]) {
+            return -1;
+        }
+        return 0;
+    });
+    for (const category of categories) {
+        category[propertyRank] = ranking.indexOf(category) + 1;
+    }
 
     return categories;
 }
 
+function rankingCategory(categories) {
 
-export function rankingCategory(summary) {
+    const catogory = judgesTotalScores(categories);
+    const doneSUtoSW = rankScore(catogory, 'SCHOOL_UNIFORM_RANK', 'SCHOOL_UNIFORM_SCORE');
+    const dontSWtoCC = rankScore(doneSUtoSW, 'SPORTS_WEAR_RANK', 'SPORTS_WEAR_SCORE');
+    const doneCCtoFR = rankScore(dontSWtoCC, 'CREATIVE_COSTUME_RANK', 'CREATIVE_COSTUME_SCORE');
 
-    // TODO : START RANKING HERE
-    // ITS ALREADY CATEGORISED TO MALE AND FEMALE
-
-    const categorical = groupBy(summary, 'CATEGORY');
-
-    // find female ranks and scores.
-    // categorical.female = judgesTotalScores(categorical.female);
-    // const rankedFemale = rankScore(categorical.female);
-    const female = categorical.female.sort((a, b) => {
+    let finalRank = rankScore(doneCCtoFR, 'FINAL_ROUND_RANK', 'FINAL_ROUND_SCORE');
+    finalRank = finalRank.sort((a, b) => {
         return a.CANDIDATE_NUMBER - b.CANDIDATE_NUMBER;
     });
 
-    // find male ranks and scores.
-    // categorical.male = judgesTotalScores(categorical.male);
-    // const rankedMale = rankScore(categorical.female);
-    const male = categorical.male.sort((a, b) => {
-        return a.CANDIDATE_NUMBER - b.CANDIDATE_NUMBER;
-    });
-    return {female, male};
+    return finalRank;
 }
+
 export module SearchService {
 
     export async function findScoreModule(userId) {
@@ -168,6 +134,7 @@ export module SearchService {
                 }
                 const finalScore = Object.create({});
                 finalScore.CATEGORY = candidate.CATEGORY;
+                finalScore.CANDIDATE_NUMBER = candidate.CANDIDATE_NUMBER;
                 finalScore.CONTESTANT = `${candidate.CANDIDATE_NUMBER}(${candidate.CATEGORY})`;
 
                 let affix = '';
@@ -214,32 +181,44 @@ export module SearchService {
         }
 
         let obj;
-        obj = rankingCategory(summary);
+
+        const categorical = groupBy(summary, 'CATEGORY');
+
+        // find female ranks and scores.
+        const finalMsRanks = rankingCategory(categorical.female);
+        // find male ranks and scores.
+        const finalMrRanks = rankingCategory(categorical.male);
+
+        obj = {finalMsRanks, finalMrRanks};
+
         return obj;
     }
 
-    export async function summarySaveChanges(summary, userId) {
-
+    export async function summarySave(clientSummaries, userId) {
         if ( userId !== 'admin') {
             throw new UnauthorizedError('Identification not allowed');
         }
+
         const judges = await DocumentService.find(Score, {});
+        const summaries = clientSummaries.finalMsRanks.concat(clientSummaries.finalMrRanks);
 
         const promises = [];
         for (const judge of judges) {
+            const contestants = [];
+            for (const contestant of judge.contestants) {
 
-            for (let contestant of judge.contestants) {
-
-                for (const summ of summary) {
-
-                    if (summ.CONTESTANT === contestant.CONTESTANT  && summ.category === contestant.category) {
-                        contestant.PRE_ATTENDANCE = summ.PRE_ATTENDANCE;
+                for (const dumSummary of summaries) {
+                    if (dumSummary.CANDIDATE_NUMBER === contestant.CANDIDATE_NUMBER  && dumSummary.CATEGORY === contestant.CATEGORY) {
+                        contestant.FINAL_ROUND_RANK = dumSummary.FINAL_ROUND_RANK;
+                        break;
                     }
                 }
+                contestants.push(contestant);
             }
-            const updated = DocumentService.updateDocument(judge, null , userId);
 
-            promises.push(updated);
+            const toUpdate = DocumentService.updateDocument(judge, null , userId);
+            promises.push(toUpdate);
+
         }
 
         return Promise.all(promises);

@@ -5,7 +5,9 @@
             <ngb-tab title="Final Round">
                 <ng-template ngbTabContent>
                     <div class="mt-1">
-
+                        <div class="d-inline">
+                            <button class="float-right" (click)="updateForQA()">Update for Question & Answer</button>
+                        </div>
                         <ngb-tabset type="pills">
                             <ngb-tab *ngFor='let tab of finalRoundTabUI' title="{{tab.tabName}}">
                                 <ng-template ngbTabContent>
@@ -133,7 +135,7 @@
                 <ng-template ngbTabContent>
                     <div class="mt-1">
                         <ngb-tabset type="pills">
-                            <ngb-tab *ngFor='let tab of finalRoundTabUI' title="{{tab.tabName}}">
+                            <ngb-tab *ngFor='let tab of questionAndAnswerTabUi' title="{{tab.tabName}}">
                                 <ng-template ngbTabContent>
                                     <div class="border">
                                         <hot-table

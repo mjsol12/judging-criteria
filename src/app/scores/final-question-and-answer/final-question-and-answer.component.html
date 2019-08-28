@@ -5,37 +5,40 @@
             <button (click)="saveScore()">Save Scores</button>
         </div>
         <div class="border">
-            <hot-table
-                    #preliminaryHotTable
-                    rowHeights="40"
-                    [nestedHeaders]="nestedHeaders"
-                    [rowHeaders]="true"
-                    [contextMenu]="true"
-                    className= "htCenter"
-                    stretchH="'all'"
-                    [data]="scores && scores.contestants ? scores.contestants : []"
-                    width = "100%"
-                    height="600"
-                    fixedColumnsLeft= '1'
-                    [licenseKey]="'non-commercial-and-evaluation'">
-                <hot-column className= "htLeft"
-                            [editor]="false"
-                            data="CATEGORY">
-                </hot-column>
-                <hot-column className= "htLeft"
-                            [editor]="false"
-                            data="CANDIDATE_NUMBER">
-                </hot-column>
-                <hot-column type="numeric"
-                            data="QA_CONCEPT">
-                </hot-column>
-                <hot-column type="numeric"
-                            data="QA_CONTENT">
-                </hot-column>
-                <hot-column  type="numeric"
-                             data="QA_IMPACT">
-                </hot-column>
-            </hot-table>
+            <ngb-tabset type="pills">
+                <ngb-tab *ngFor='let tab of scoringTabUi' title="{{tab.tabName}}">
+                    <ng-template ngbTabContent>
+                        <div class="border">
+                            <hot-table
+                                    #preliminaryHotTable
+                                    rowHeights="40"
+                                    [nestedHeaders]="tab.header"
+                                    [rowHeaders]="true"
+                                    [contextMenu]="true"
+                                    className= "htCenter"
+                                    stretchH="all"
+                                    [data]="tab.scores"
+                                    height="600"
+                                    fixedColumnsLeft= '1'
+                                    [licenseKey]="'non-commercial-and-evaluation'">
+                                <hot-column className= "htLeft"
+                                            [editor]="false"
+                                            data="CANDIDATE_NUMBER">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            data="QA_CONCEPT">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            data="QA_CONTENT">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="QA_IMPACT">
+                                </hot-column>
+                            </hot-table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
         </div>
     </div>
 

@@ -5,16 +5,27 @@ import {Contestant, GENDER, Score} from '../../shared/model/pp/score.model';
 import {ToastrService} from 'ngx-toastr';
 import {Gender} from '../../shared/model/pageant-procedure/candidate.model';
 
+export class ScoringTabUI {
+    constructor(
+        public tabName: string,
+        public header: any[],
+        public gender: Gender,
+        public scores: Score[]
+    ) {
+    }
+}
+
 @Component({
   selector: 'app-final-round',
   templateUrl: './final-round.component.html',
   styleUrls: ['./final-round.component.css']
 })
-export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy{
+export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy {
 
     @Input('finalRoundHotTable')preliminaryHotTable;
+    scoringTabUi: ScoringTabUI[];
     nestedHeaders = finalRoundTable.nestedHeaders ;
-    data: Score;
+    dataScores: Score;
 
     judgeId: string;
     gender = Gender;
@@ -34,17 +45,41 @@ export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy{
           this.judgeId = params['judge'];
       });
   }
-    ngAfterViewInit() {
-        if (this.judgeId) {
-            this.searchApi.getScoreModule(this.judgeId).toPromise().then(score => {
-                this.data = score;
-            });
+    async ngAfterViewInit() {
+        await this.initScoring();
+
+    }
+
+    async initScoring() {
+        if (!this.judgeId) {
+            return;
         }
+        try {
+            this.dataScores = await this.searchApi.getScoreModule(this.judgeId).toPromise();
+
+            const categorical = this.groupBy(this.dataScores.contestants, 'CATEGORY');
+
+            this.scoringTabUi = [
+                new ScoringTabUI('Ms.', this.nestedHeaders, Gender.Female, categorical.female ),
+                new ScoringTabUI('Mr.', this.nestedHeaders, Gender.Female, categorical.male )
+            ];
+        } catch (e) {
+            this.toastr.error(e, 'Error');
+        }
+    }
+
+    groupBy(arr, property) {
+        return arr.reduce((memo, x) => {
+            if (!memo[x[property]]) { memo[x[property]] = []; }
+            memo[x[property]].push(x);
+            return memo;
+        }, {});
     }
 
     async saveScore() {
       try {
-          await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
+
+          await this.searchApi.saveScoreModule(this.dataScores, this.judgeId).toPromise();
           this.toastr.success('Saved Changes');
       } catch (e) {
           this.toastr.error(e);
@@ -68,7 +103,7 @@ export const finalRoundTable = {
             ''
         ],
         [   '',
-            '<br> <span style="font-size: 10px">#</span>',
+            '<br>Candidate <span style="font-size: 10px">#</span>',
 
             'Personality <br> <spa style="font-size: 10px">50</spa>',
             'Poise and Bearing <br> <spa style="font-size: 10px">30</spa>',
@@ -86,4 +121,5 @@ export const finalRoundTable = {
             ''
         ]
     ]
-}
+};
+

@@ -39,7 +39,7 @@ export class PageantApiService {
         return this.http.get<any[]>(`${v1}${ServerRoutes.SUMMARY}`, {params: { id: judgeId}});
     }
 
-    getSaveSummary(summary , adminId) {
+    saveSummary(summary , adminId) {
         // get all proceduresx
         return this.http.post<any[]>(`${v1}${ServerRoutes.SUMMARY}`, summary, {params: { id: adminId}});
     }
