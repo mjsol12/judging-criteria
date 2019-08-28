@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Candidate} from '../../model/pageant-procedure/candidate.model';
 import {ServerRoutes} from '../server-routes';
-import {Judge} from '../../model/pageant-procedure/judge.model';
 import {Score} from '../../model/pp/score.model';
 
 const apiUrl = `${window.location.origin}/api`;
@@ -46,9 +45,4 @@ export class PageantApiService {
         // returns the user's school if no id specified
         return this.http.post<Candidate>(`${v1}${ServerRoutes.CANDIDATE}`, candidate);
     }
-
-    getLink() {
-        return `${v1}`
-    }
-
 }
