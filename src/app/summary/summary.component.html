@@ -1,83 +1,186 @@
 <div class="container-fluid">
     <div class="container pt-2">
-        <h3 class="mt-3">Summary</h3>
-        <button (click)="saveChanges()">Save Changes</button>
-        <div class="border">
-            <hot-table
-                    #summaryHotTable
-                    rowHeights="40"
-                    [nestedHeaders]="nestedHeaders"
-                    [rowHeaders]="true"
-                    [contextMenu]="true"
-                    className= "htCenter"
-                    stretchH="'all'"
-                    [data]="data"
-                    width = "100%"
-                    height="600"
-                    fixedColumnsLeft= '1'
-                    [licenseKey]="'non-commercial-and-evaluation'">
-                <hot-column className= "htLeft"
-                            [editor]="false"
-                            data="CONTESTANT">
-                </hot-column>
-                <!--preliminary Rank-->
-                <hot-column type="numeric"
-                            data="PRE_ATTENDANCE">
-                </hot-column>
-                <hot-column type="numeric"
-                            [editor]="false"
-                            data="JUDGE1_PRELIMINARY_SCORE">
-                </hot-column>
-                <hot-column type="numeric"
-                            [editor]="false"
-                            data="JUDGE2_PRELIMINARY_SCORE">
-                </hot-column>
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="JUDGE3_PRELIMINARY_SCORE">
-                </hot-column>
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="preliminaryRank">
-                </hot-column>
-                <!--end of preliminary rank>-->
-                <!--<final round-->
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="JUDGE1_FINALROUND_SCORE">
-                </hot-column>
-                <hot-column type="numeric"
-                            [editor]="false"
-                            data="JUDGE2_FINALROUND_SCORE">
-                </hot-column>
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="JUDGE3_FINALROUND_SCORE">
-                </hot-column>
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="finalRoundRank">
-                </hot-column>
-                <!--end of finalRound > -->
-                <!--final QA-->
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="JUDGE1_QAFINAL_SCORE">
-                </hot-column>
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="JUDGE2_QAFINAL_SCORE">
-                </hot-column>
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="JUDGE3_QAFINAL_SCORE">
-                </hot-column>
-                <hot-column  type="numeric"
-                             [editor]="false"
-                             data="questAnsFinalRank">
-                </hot-column>
-            </hot-table>
-        </div>
-    </div>
+        <h3 class="mt-3 text-center">Overall Summary</h3>
+        <ngb-tabset justify="center">
+            <ngb-tab title="Final Round">
+                <ng-template ngbTabContent>
+                    <div class="mt-1">
 
+                        <ngb-tabset type="pills">
+                            <ngb-tab *ngFor='let tab of finalRoundTabUI' title="{{tab.tabName}}">
+                                <ng-template ngbTabContent>
+                                    <div class="border">
+                                        <hot-table
+                                                #summaryHotTable
+                                                rowHeights="40"
+                                                [nestedHeaders]="tab.header"
+                                                [rowHeaders]="true"
+                                                [contextMenu]="true"
+                                                className= "htCenter"
+                                                stretchH="all"
+                                                [data]="tab.scores"
+                                                height="600"
+                                                fixedColumnsLeft= '1'
+                                                [licenseKey]="'non-commercial-and-evaluation'">
+                                            <hot-column className= "htLeft"
+                                                        [editor]="false"
+                                                        data="CONTESTANT">
+                                            </hot-column>
+                                            <!--<SCHOOL_UNIFORM_SCORE-->
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE1_SCHOOL_UNIFORM_SCORE">
+                                            </hot-column>
+                                            <hot-column type="numeric"
+                                                        [editor]="false"
+                                                        data="JUDGE2_SCHOOL_UNIFORM_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE3_SCHOOL_UNIFORM_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         [renderer]="scoreRenderer"
+                                                         data="SCHOOL_UNIFORM_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="SCHOOL_UNIFORM_RANK">
+                                            </hot-column>
+                                            <!--end of SCHOOL_UNIFORM_SCORE > -->
+                                            <!--<SPORTS_WEAR_SCORE-->
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE1_SPORTS_WEAR_SCORE">
+                                            </hot-column>
+                                            <hot-column type="numeric"
+                                                        [editor]="false"
+                                                        data="JUDGE2_SPORTS_WEAR_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE3_SPORTS_WEAR_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         [renderer]="scoreRenderer"
+                                                         data="SPORTS_WEAR_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="SPORTS_WEAR_RANK">
+                                            </hot-column>
+                                            <!--end of SPORTS_WEAR_SCORE > -->
+                                            <!--<CREATIVE_COSTUME_SCORE round-->
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE1_CREATIVE_COSTUME_SCORE">
+                                            </hot-column>
+                                            <hot-column type="numeric"
+                                                        [editor]="false"
+                                                        data="JUDGE2_CREATIVE_COSTUME_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE3_CREATIVE_COSTUME_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         [renderer]="scoreRenderer"
+                                                         data="CREATIVE_COSTUME_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="CREATIVE_COSTUME_RANK">
+                                            </hot-column>
+                                            <!--end of CREATIVE_COSTUME_SCORE > -->
+                                            <!--<final round-->
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         [renderer]="scoreRenderer"
+                                                         data="JUDGE1_FINAL_ROUND_SCORE">
+                                            </hot-column>
+                                            <hot-column type="numeric"
+                                                        [editor]="false"
+                                                        [renderer]="scoreRenderer"
+                                                        data="JUDGE2_FINAL_ROUND_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         [renderer]="scoreRenderer"
+                                                         data="JUDGE3_FINAL_ROUND_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         [renderer]="scoreRenderer"
+                                                         data="FINAL_ROUND_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="FINAL_ROUND_RANK">
+                                            </hot-column>
+                                            <!--end of finalRound > -->
+                                        </hot-table>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Question And Answer">
+                <ng-template ngbTabContent>
+                    <div class="mt-1">
+                        <ngb-tabset type="pills">
+                            <ngb-tab *ngFor='let tab of finalRoundTabUI' title="{{tab.tabName}}">
+                                <ng-template ngbTabContent>
+                                    <div class="border">
+                                        <hot-table
+                                                #summaryHotTable
+                                                rowHeights="40"
+                                                [nestedHeaders]="nestedHeadersQuestionAnswer"
+                                                [rowHeaders]="true"
+                                                [contextMenu]="true"
+                                                className= "htCenter"
+                                                stretchH="all"
+                                                [data]="tab.scores"
+                                                height="600"
+                                                fixedColumnsLeft= '1'
+                                                [licenseKey]="'non-commercial-and-evaluation'">
+                                            <hot-column className= "htLeft"
+                                                        [editor]="false"
+                                                        data="CONTESTANT">
+                                            </hot-column>
+                                            <!--final QA-->
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE1_QA_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE2_QA_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="JUDGE3_QA_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="QA_SCORE">
+                                            </hot-column>
+                                            <hot-column  type="numeric"
+                                                         [editor]="false"
+                                                         data="QA_RANK">
+                                            </hot-column>
+                                        </hot-table>
+                                    </div>
+                                </ng-template>
+                            </ngb-tab>
+                        </ngb-tabset>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
 </div>

@@ -5,40 +5,28 @@ export enum GENDER {
     Female = 'female',
 }
 export class Contestant {
-    // preliminary round
-    public preliminaryRank?: number;
-    public PRELIMINARY_SCORE?: number;
 
     // final round
-    public finalRoundRank?: number;
-    public FINALROUND_SCORE?: number;
+    public FINAL_ROUND_RANK?: number;
+    public FINAL_ROUND_SCORE?: number;
 
     // best in school uniform
-    public schoolUniformRank?: number;
-    public SCHOOLUNIFORM_SCORE: number;
+    public SCHOOL_UNIFORM_RANK?: number;
+    public SCHOOL_UNIFORM_SCORE: number;
     // best in spots wear
-    public sportsWearRank?: number;
-    public SPORTSWARE_SCORE: number;
+    public SPORTS_WEAR_RANK: number;
+    public SPORTS_WEAR_SCORE: number;
     // best in costume
-    public creativeCostumeRank?: number;
-    public CREATIVECOSTUME_SCORE?: number;
+    public CREATIVE_COSTUME_RANK?: number;
+    public CREATIVE_COSTUME_SCORE?: number;
 
     // q & a finale
-    public questAnsFinalRank?: number;
-    public QAFINAL_SCORE?: number;
+    public QA_RANK?: number;
+    public QA_SCORE?: number;
 
-    public CONTESTANT?: string;
     constructor(
-        public category?: GENDER,
-        public candidateNumber?: number,
-        public PRE_QA_CONTENT?: number,
-        public PRE_QA_CONCEPT?: number,
-        public PRE_QA_IMPACT?: number,
-        public PRE_PO_POISE?: number,
-        public PRE_PO_CARRIAGE?: number,
-        public PRE_PO_BEAUTY?: number,
-        public PRE_PO_IMPACT?: number,
-        public PRE_ATTENDANCE?: number,
+        public CATEGORY?: GENDER,
+        public CANDIDATE_NUMBER?: number,
         public FR_SU_PERSONALITY?: number,
         public FR_SU_POISE?: number,
         public FR_SU_CARRIAGE?: number,
@@ -50,11 +38,10 @@ export class Contestant {
         public FR_CC_POISE?: number,
         public FR_CC_CARRIAGE?: number,
         public FR_CC_BEAUTY?: number,
-        public FINALQA_CONCEPT?: number,
-        public FINALQA_CONTENT?: number,
-        public FINALQA_IMPACT?: number,
+        public QA_CONCEPT?: number,
+        public QA_CONTENT?: number,
+        public QA_IMPACT?: number,
         ) {
-        this.CONTESTANT = `${candidateNumber} (${category})`;
     }
 }
 

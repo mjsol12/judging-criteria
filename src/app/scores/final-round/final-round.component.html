@@ -1,7 +1,9 @@
 <div class="container-fluid">
     <div class="container pt-2">
-        <h3 class="mt-3">Final Round</h3>
-        <button (click)="saveScore()">Save Scores</button>
+        <h3 class="mt-3 text-center">Final Round</h3>
+        <div class="mb-1 mt-1">
+            <button (click)="saveScore()">Save Scores</button>
+        </div>
         <div class="border">
             <hot-table
                     #finalRoundHotTable
@@ -14,11 +16,16 @@
                     [data]="data && data.contestants ? data.contestants : []"
                     width = "100%"
                     height="600"
-                    fixedColumnsLeft= '1'
+                    [dataSchema]="contestantSample"
+                    [fixedColumnsLeft]="2"
                     [licenseKey]="'non-commercial-and-evaluation'">
+                <hot-column className="htLeft"
+                            type="dropdown"
+                            [source]="[gender.Male, gender.Female]"
+                            data="CATEGORY">
+                </hot-column>
                 <hot-column className= "htLeft"
-                            [editor]="false"
-                            data="CONTESTANT">
+                            data="CANDIDATE_NUMBER">
                 </hot-column>
                 <hot-column  type="numeric"
                              data="FR_SU_PERSONALITY">

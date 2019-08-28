@@ -20,6 +20,7 @@ import { SummaryComponent } from './summary/summary.component';
 import { PrelimniaryComponent } from './scores/prelimniary/prelimniary.component';
 import { FinalRoundComponent } from './scores/final-round/final-round.component';
 import { FinalQuestionAndAnswerComponent } from './scores/final-question-and-answer/final-question-and-answer.component';
+import {HomeComponent} from './home/home.component';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { FinalQuestionAndAnswerComponent } from './scores/final-question-and-ans
         SummaryComponent,
         PrelimniaryComponent,
         FinalRoundComponent,
-        FinalQuestionAndAnswerComponent
+        FinalQuestionAndAnswerComponent,
+        HomeComponent
     ],
     imports: [
         BrowserModule,

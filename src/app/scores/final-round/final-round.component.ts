@@ -1,8 +1,9 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
-import {Score} from '../../shared/model/pp/score.model';
+import {Contestant, GENDER, Score} from '../../shared/model/pp/score.model';
 import {ToastrService} from 'ngx-toastr';
+import {Gender} from '../../shared/model/pageant-procedure/candidate.model';
 
 @Component({
   selector: 'app-final-round',
@@ -16,9 +17,14 @@ export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy{
     data: Score;
 
     judgeId: string;
+    gender = Gender;
     private sub: any;
 
-  constructor(private route: ActivatedRoute, private searchApi: PageantApiService, private toastr: ToastrService) { }
+    contestantSample() {
+        return new Contestant(null, null, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    }
+
+    constructor(private route: ActivatedRoute, private searchApi: PageantApiService, private toastr: ToastrService) { }
 
   ngOnInit() {
       // sample url
@@ -55,13 +61,14 @@ export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy{
 // Format final round sample
 export const finalRoundTable = {
     nestedHeaders: [
-        [   '',
+        [   {label: 'Contestant', colspan: 2},
             {label: 'School Uniform', colspan: 3},
             {label: 'Sports Wear', colspan: 4},
             {label: 'Creative Costume', colspan: 4},
             ''
         ],
-        [   'Candidate <br> <span style="font-size: 10px">#</span>',
+        [   '',
+            '<br> <span style="font-size: 10px">#</span>',
 
             'Personality <br> <spa style="font-size: 10px">50</spa>',
             'Poise and Bearing <br> <spa style="font-size: 10px">30</spa>',

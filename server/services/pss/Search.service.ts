@@ -1,49 +1,28 @@
 import * as DocumentService from '../DocumentService';
 import {Score} from '../../../src/app/shared/model/pp/score.model';
 import {InvalidRequestError, UnauthorizedError} from '../../utilities/Errors';
-import {allSettled} from 'q';
-
-function calculatePreliminaryRound(contestant) {
-    // preliminary
-    const weightedQa = .50;
-    const weightedPo = .30;
-    let preliFinalScore = 0;
-    let qAScore = contestant.PRE_QA_CONTENT + contestant.PRE_QA_CONCEPT + contestant.PRE_QA_IMPACT;
-    qAScore = qAScore * weightedQa;
-
-    let pOScore = contestant.PRE_PO_POISE + contestant.PRE_PO_CARRIAGE + contestant.PRE_PO_BEAUTY + contestant.PRE_PO_IMPACT;
-    pOScore = pOScore * weightedPo;
-
-    preliFinalScore = pOScore + qAScore + contestant.PRE_ATTENDANCE;
-
-    contestant.PRELIMINARY_SCORE = preliFinalScore;
-
-    return contestant;
-}
 
 function calculateFinalRound(contestant) {
 
     // school uniform
-    let sUniformScore = 0;
+    let sUniformScore;
     sUniformScore = contestant.FR_SU_PERSONALITY + contestant.FR_SU_POISE + contestant.FR_SU_CARRIAGE;
-    contestant.SCHOOLUNIFORM_SCORE = sUniformScore;
+    contestant.SCHOOL_UNIFORM_SCORE = sUniformScore;
     // Sports Wear
-    let sportWScore = 0;
+    let sportWScore;
     sportWScore = contestant.FR_SW_POISE + contestant.FR_SW_CARRIAGE + contestant.FR_SW_FIGURE + contestant.FR_SW_SPORTS_IDENTITY;
-    contestant.SPORTSWARE_SCORE = sportWScore;
+    contestant.SPORTS_WEAR_SCORE = sportWScore;
     //  Creative Costume
-    let cCostumeScore = 0;
+    let cCostumeScore;
     cCostumeScore = contestant.FR_CC_CONCEPT + contestant.FR_CC_POISE + contestant.FR_CC_CARRIAGE + contestant.FR_CC_BEAUTY;
-    contestant.CREATIVECOSTUME_SCORE = cCostumeScore;
+    contestant.CREATIVE_COSTUME_SCORE = cCostumeScore;
 
     // final round score
     const apFinalScore = sUniformScore + sportWScore + cCostumeScore;
-    contestant.FINALROUND_SCORE = apFinalScore / 3;
+    contestant.FINAL_ROUND_SCORE = apFinalScore / 3;
 
     // q and a final
-    let finalQAscore = 0;
-    finalQAscore = contestant.FINALQA_CONCEPT + contestant.FINALQA_CONTENT + contestant.FINALQA_IMPACT;
-    contestant.QAFINAL_SCORE = finalQAscore;
+    contestant.QA_SCORE = contestant.QA_CONCEPT + contestant.QA_CONTENT + contestant.QA_IMPACT;
 
     return contestant;
 }
@@ -55,36 +34,98 @@ function groupBy(arr, property) {
         return memo;
     }, {});
 }
+// male or female
+function judgesTotalScores(categories) {
+    const numberOfJudges = 3;
+    // find female ranks and scores.
+    for (const m of categories) {
+        // awards
+        // school uniform score
+        const addedSUScores = m.JUDGE1_SCHOOL_UNIFORM_SCORE + m.JUDGE2_SCHOOL_UNIFORM_SCORE + m.JUDGE3_SCHOOL_UNIFORM_SCORE;
+        m.SCHOOL_UNIFORM_SCORE = addedSUScores / numberOfJudges;
+        // school sports score
+        const addedSWScores = m.JUDGE1_SPORTS_WEAR_SCORE + m.JUDGE2_SPORTS_WEAR_SCORE + m.JUDGE3_SPORTS_WEAR_SCORE;
+        m.SPORTS_WEAR_SCORE = addedSWScores / numberOfJudges;
+        // school costume score
+        const addedCCScores = m.JUDGE1_CREATIVE_COSTUME_SCORE + m.JUDGE2_CREATIVE_COSTUME_SCORE + m.JUDGE3_CREATIVE_COSTUME_SCORE;
+        m.CREATIVE_COSTUME_SCORE = addedCCScores / numberOfJudges;
+        // final round score
+        const addedScores = m.JUDGE1_FINAL_ROUND_SCORE + m.JUDGE2_FINAL_ROUND_SCORE + m.JUDGE3_FINAL_ROUND_SCORE;
+        m.FINAL_ROUND_SCORE = addedScores / numberOfJudges;
+    }
 
-function rankingCategory(summary) {
-    const categorical = groupBy(summary, 'category');
+    return categories;
+}
 
-    let allsum = [];
-    // // rank to preliminary\z
-    const boys = categorical.male.sort((a , b) => {
-        return a.PRELIMINARY_SCORE - b.PRELIMINARY_SCORE;
+function rankScore(categories) {
+
+    const rankSU = categories.sort((a, b) => {
+        if (a.SCHOOL_UNIFORM_SCORE < b.SCHOOL_UNIFORM_SCORE ) {
+            return 1;
+        }
+        if (a.SCHOOL_UNIFORM_SCORE > b.SCHOOL_UNIFORM_SCORE) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
     });
-    boys.forEach((val, index) => {
-        val.preliminaryRank = index + 1;
+    const rankSW = categories.sort((a, b) => {
+        if (a.SPORTS_WEAR_SCORE < b.SPORTS_WEAR_SCORE ) {
+            return 1;
+        }
+        if (a.SPORTS_WEAR_SCORE > b.SPORTS_WEAR_SCORE) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+    const rankCC = categories.sort((a, b) => {
+        if (a.CREATIVE_COSTUME_SCORE < b.CREATIVE_COSTUME_SCORE ) {
+            return 1;
+        }
+        if (a.CREATIVE_COSTUME_SCORE > b.CREATIVE_COSTUME_SCORE) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
+    });
+    const rankFR = categories.sort((a, b) => {
+        if (a.FINAL_ROUND_SCORE < b.FINAL_ROUND_SCORE ) {
+            return 1;
+        }
+        if (a.FINAL_ROUND_SCORE > b.FINAL_ROUND_SCORE) {
+            return -1;
+        }
+        // a must be equal to b
+        return 0;
     });
 
-    const girls = categorical.female.sort((a , b) => {
-        return a.PRELIMINARY_SCORE - b.PRELIMINARY_SCORE;
-    });
-    girls.forEach((val, index) => {
-        val.preliminaryRank = index + 1;
+
+    return categories;
+}
+
+
+export function rankingCategory(summary) {
+
+    const categorical = groupBy(summary, 'CATEGORY');
+
+    // find female ranks and scores.
+    // categorical.female = judgesTotalScores(categorical.female);
+    // const rankedFemale = rankScore(categorical.female);
+    const female = categorical.female.sort((a, b) => {
+        return a.CANDIDATE_NUMBER - b.CANDIDATE_NUMBER;
     });
 
-    allsum = boys.concat(girls);
-
-    allsum.sort((a, b) => {
-        return a.CONTESTANT - b.CONTESTANT;
+    // find male ranks and scores.
+    // categorical.male = judgesTotalScores(categorical.male);
+    // const rankedMale = rankScore(categorical.female);
+    const male = categorical.male.sort((a, b) => {
+        return a.CANDIDATE_NUMBER - b.CANDIDATE_NUMBER;
     });
-    allsum = summary;
-
-    return allsum;
+    return {female, male};
 }
 export module SearchService {
+
     export async function findScoreModule(userId) {
         const filter = {
             'userId' : userId
@@ -99,8 +140,6 @@ export module SearchService {
         }
         // preliminary
         for (let contestant of score.contestants) {
-            // preliminary
-            contestant = calculatePreliminaryRound(contestant);
             // final round;
             contestant = calculateFinalRound(contestant);
         }
@@ -125,11 +164,8 @@ export module SearchService {
                     return;
                 }
                 const finalScore = Object.create({});
-
-                finalScore.CONTESTANT = candidate.CONTESTANT;
-                finalScore.PRE_ATTENDANCE = candidate.PRE_ATTENDANCE;
-
-                finalScore.category = candidate.category;
+                finalScore.CATEGORY = candidate.CATEGORY;
+                finalScore.CONTESTANT = `${candidate.CANDIDATE_NUMBER}(${candidate.CATEGORY})`;
 
                 let affix = '';
 
@@ -145,9 +181,11 @@ export module SearchService {
                         break;
                 }
 
-                finalScore[`${affix}_PRELIMINARY_SCORE`] = candidate.PRELIMINARY_SCORE;
-                finalScore[`${affix}_FINALROUND_SCORE`] = candidate.FINALROUND_SCORE;
-                finalScore[`${affix}_QAFINAL_SCORE`] = candidate.QAFINAL_SCORE;
+                finalScore[`${affix}_FINAL_ROUND_SCORE`] = candidate.FINAL_ROUND_SCORE ? candidate.FINAL_ROUND_SCORE : 0;
+                finalScore[`${affix}_SCHOOL_UNIFORM_SCORE`] = candidate.SCHOOL_UNIFORM_SCORE ? candidate.SCHOOL_UNIFORM_SCORE : 0;
+                finalScore[`${affix}_SPORTS_WEAR_SCORE`] = candidate.SPORTS_WEAR_SCORE ? candidate.SPORTS_WEAR_SCORE : 0;
+                finalScore[`${affix}_CREATIVE_COSTUME_SCORE`] = candidate.CREATIVE_COSTUME_SCORE ? candidate.CREATIVE_COSTUME_SCORE : 0;
+                finalScore[`${affix}_QA_SCORE`] = candidate.QA_SCORE ? candidate.QA_SCORE : 0;
 
                 candidates.push(finalScore);
             }
@@ -161,7 +199,6 @@ export module SearchService {
                     for (const cand of candidates) {
 
                         if (sum.CONTESTANT === cand.CONTESTANT) {
-                            delete cand.CONTESTANT;
                             const preScore = {...sum, ...cand};
                             partialSummary.push(preScore);
                         }
@@ -173,8 +210,9 @@ export module SearchService {
             summary = summary.length > 0 ? partialSummary : summary.concat(candidates);
         }
 
-        summary = rankingCategory(summary);
-        return summary;
+        let obj;
+        obj = rankingCategory(summary);
+        return obj;
     }
 
     export async function summarySaveChanges(summary, userId) {
@@ -193,7 +231,6 @@ export module SearchService {
 
                     if (summ.CONTESTANT === contestant.CONTESTANT  && summ.category === contestant.category) {
                         contestant.PRE_ATTENDANCE = summ.PRE_ATTENDANCE;
-                        contestant = calculatePreliminaryRound(contestant);
                     }
                 }
             }

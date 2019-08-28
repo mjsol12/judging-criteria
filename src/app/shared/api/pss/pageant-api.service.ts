@@ -50,4 +50,8 @@ export class PageantApiService {
         return this.http.post<Candidate>(`${v1}${ServerRoutes.CANDIDATE}`, candidate);
     }
 
+    getLink() {
+        return `${v1}`
+    }
+
 }

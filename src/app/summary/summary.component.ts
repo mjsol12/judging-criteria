@@ -2,7 +2,17 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../shared/api/pss/pageant-api.service';
 import {ToastrService} from 'ngx-toastr';
-
+import {Score} from '../shared/model/pp/score.model';
+import {Gender} from '../shared/model/pageant-procedure/candidate.model';
+export class ScoresTabUI {
+    constructor(
+        public tabName: string,
+        public header: any[],
+        public gender: Gender,
+        public scores: Score[]
+    ) {
+    }
+}
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
@@ -10,8 +20,14 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('summaryHotTable', {static: false})summaryHotTable;
+
     nestedHeaders = finalSummaryTable.nestedHeaders ;
-    data: any[] = [];
+    finalRoundTabUI: ScoresTabUI[];
+
+    nestedHeadersQuestionAnswer = qASummaryTable.nestedHeaders ;
+    questionAndAnswerTabUi: ScoresTabUI[];
+
+    data: any;
 
     adminId: string;
     private sub: any;
@@ -28,9 +44,23 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
           this.adminId = params['admin'];
       });
   }
+
+    scoreRenderer(instance, td, row, col, prop, value, cellProperties) {
+        if (value != null || (value && value.trim &&  value.trim() !== '')) {
+            td.innerText = `${value.toFixed(2)}` || '0';
+        } else {
+            td.innerText = '';
+        }
+        return td;
+    }
+
     async ngAfterViewInit() {
       try {
           this.data = await this.getSummary();
+          this.finalRoundTabUI = [
+              new ScoresTabUI('FEMALE', this.nestedHeaders, Gender.Female, this.data.female),
+              new ScoresTabUI('MALE', this.nestedHeaders,  Gender.Female, this.data.male),
+          ];
       } catch (e) {
           this.toastr.error(e, 'Error Server');
       }
@@ -43,15 +73,6 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
         return;
     }
 
-    async saveChanges() {
-        try {
-            await this.searchApi.getSaveSummary(this.data, this.adminId).toPromise();
-            this.toastr.success('Please reload the page', 'Saved Changes');
-        } catch (e) {
-            this.toastr.error(e);
-        }
-    }
-
     ngOnDestroy() {
         if (this.sub) {
             this.sub.unsubscribe();
@@ -62,25 +83,67 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
 export const finalSummaryTable = {
     nestedHeaders: [
         [   '',
-            {label: 'Preliminary Round', colspan: 5},
-            {label: 'Final Round', colspan: 4},
-            {label: 'Final Question And Answer', colspan: 4},
+            {label: 'School Uniform', colspan: 5},
+            {label: 'Sports Wear', colspan: 5},
+            {label: 'Creative Costume', colspan: 5},
+            {label: 'Total Scores', colspan: 5},
+            {label: '', colspan: 5},
             ''
         ],
+        [   '',
+            {label: 'Judge', colspan: 3},
+            {label: 'Rank', colspan: 2},
+            {label: 'Judge', colspan: 3},
+            {label: 'Rank', colspan: 2},
+            {label: 'Judge', colspan: 3},
+            {label: 'Rank', colspan: 2},
+            {label: 'Judge', colspan: 3},
+            {label: 'Rank', colspan: 2},
+            {label: 'Judge', colspan: 3},
+            'Rank'
+        ],
         [   'Candidate <br> <span style="font-size: 10px">#</span>',
-            'Attendance <br> <span style="font-size: 10px">(Score) 20</span>',
-            'Judge 1',
-            'Judge 2',
-            'Judge 3 ',
-            'Rank',
-            'Judge 1',
-            'Judge 2',
-            'Judge 3 ',
-            'Rank ',
-            'Judge 1',
-            'Judge 2',
-            'Judge 3 ',
-            'Rank',
+            '1',
+            '2',
+            '3',
+            'Final Score',
+            '#',
+            '1',
+            '2',
+            '3 ',
+            'Final Score',
+            '#',
+            '1',
+            '2',
+            '3 ',
+            'Final Score',
+            '#',
+            '1',
+            '2',
+            '3 ',
+            'Final Score',
+            '#',
+            '1',
+            '2',
+            '3 ',
+            'Final Score',
+            '#',
+            ''
+        ]
+    ]
+};
+// Format Preliminary sample
+export const qASummaryTable = {
+    nestedHeaders: [
+        [   '',
+            {label: 'Judge', colspan: 3},
+            'Rank'
+        ],
+        [   'Candidate <br> <span style="font-size: 10px">#</span>',
+            '1',
+            '2',
+            '3 ',
+            '#',
             ''
         ]
     ]

@@ -33,12 +33,13 @@ export class PrelimniaryComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     async saveScore() {
-        try {
-            await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
-            this.toastr.success('Changes saved');
-        } catch (e) {
-            this.toastr.error(e);
-        }
+        console.log(this.data)
+        // try {
+        //     await this.searchApi.saveScoreModule(this.data, this.judgeId).toPromise();
+        //     this.toastr.success('Changes saved');
+        // } catch (e) {
+        //     this.toastr.error(e);
+        // }
     }
 
     ngOnDestroy() {
