@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
       this.judge2FR = `${baseUrl}/final-round?judge=judge_2`;
       this.judge3FR = `${baseUrl}/final-round?judge=judge_3`;
       this.judge1QA = `${baseUrl}/question-and-answer?judge=judge_1`;
-      this.judge2QA = `${baseUrl}/question-and-answer?judge=judge_3`;
-      this.judge3QA = `${baseUrl}/question-and-answer?judge=judge_2`;
+      this.judge2QA = `${baseUrl}/question-and-answer?judge=judge_2`;
+      this.judge3QA = `${baseUrl}/question-and-answer?judge=judge_3`;
   }
 
 }
