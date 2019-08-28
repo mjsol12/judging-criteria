@@ -107,6 +107,9 @@ function rankScore(categories) {
 
 export function rankingCategory(summary) {
 
+    // TODO : START RANKING HERE
+    // ITS ALREADY CATEGORISED TO MALE AND FEMALE
+
     const categorical = groupBy(summary, 'CATEGORY');
 
     // find female ranks and scores.
