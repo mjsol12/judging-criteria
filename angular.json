@@ -61,7 +61,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "jugding-criteria:build",
-            "port" : 1230
+            "port" : 1230,
+            "proxyConfig": "proxy.conf.js"
           },
           "configurations": {
             "production": {

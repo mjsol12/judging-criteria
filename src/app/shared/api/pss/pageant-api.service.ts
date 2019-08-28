@@ -1,14 +1,11 @@
 import { Injectable } from '@angular/core';
-import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Candidate} from '../../model/pageant-procedure/candidate.model';
 import {ServerRoutes} from '../server-routes';
 import {Judge} from '../../model/pageant-procedure/judge.model';
 import {Score} from '../../model/pp/score.model';
 
-const env: any = environment;
-
-const apiUrl = env.API_URL == null || env.production ? `${window.location.origin}/api` : env.API_URL;
+const apiUrl = `${window.location.origin}/api`;
 const v1 = `${apiUrl}/v1`;
 
 @Injectable()
