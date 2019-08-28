@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PageantApiService} from '../shared/api/pss/pageant-api.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,10 +7,26 @@ import {PageantApiService} from '../shared/api/pss/pageant-api.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor(private searchService: PageantApiService) { }
+    urlSummary: string;
+    judge1FR: string;
+    judge2FR: string;
+    judge3FR: string;
+    judge1QA: string;
+    judge2QA: string;
+    judge3QA: string;
+    links = [];
+  constructor(private router: Router) { }
 
   ngOnInit() {
+      const parsedUrl = new URL(window.location.href);
+      const baseUrl = parsedUrl.origin;
+      this.urlSummary = `${baseUrl}/summary?admin=admin`;
+      this.judge1FR = `${baseUrl}/final-round?judge=judge_1`;
+      this.judge2FR = `${baseUrl}/final-round?judge=judge_2`;
+      this.judge3FR = `${baseUrl}/final-round?judge=judge_3`;
+      this.judge1QA = `${baseUrl}/question-and-answer?judge=judge_1`;
+      this.judge2QA = `${baseUrl}/question-and-answer?judge=judge_3`;
+      this.judge3QA = `${baseUrl}/question-and-answer?judge=judge_2`;
   }
 
 }

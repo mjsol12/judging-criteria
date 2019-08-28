@@ -1,19 +1,38 @@
 <div class="container-fluid">
     <div class="container pt-2">
-        <h3 class="mt-3 text-center">Home</h3>
+        <h3 class="mt-3 text-center">List of Links</h3>
     </div>
     <div class="card">
         <div class="card-body">
-            <h4>
-                List of Links
-            </h4>
-            <ul class="list-group">
-                <li class="list-group-item">{{}}</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
-            </ul>
+            <div class="m-1">
+                <ul class="list-group">
+                    <li class="list-group-item" >
+                        Overall Summary : <a [href]="urlSummary" target="_blank">{{urlSummary}}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="row m-1">
+                <div class="col">
+                    <h5>
+                        Final Round Judges Scoring System Links
+                    </h5>
+                    <ul class="list-group">
+                        <li class="list-group-item" >Judge 1: <a [href]="judge1FR" target="_blank">{{judge1FR}}</a></li>
+                        <li class="list-group-item" >Judge 2: <a [href]="judge2FR" target="_blank">{{judge2FR}}</a></li>
+                        <li class="list-group-item" >Judge 3: <a [href]="judge3FR" target="_blank">{{judge3FR}}</a></li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <h5>
+                        Question and Answer Judges Scoring System Links
+                    </h5>
+                    <ul class="list-group">
+                        <li class="list-group-item" >Judge 1: <a [href]="judge1QA" target="_blank">{{judge1QA}}</a></li>
+                        <li class="list-group-item" >Judge 2: <a [href]="judge2QA" target="_blank">{{judge2QA}}</a></li>
+                        <li class="list-group-item" >Judge 3: <a [href]="judge2QA" target="_blank">{{judge3QA}}</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 </div>
