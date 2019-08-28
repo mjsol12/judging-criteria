@@ -1,2 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~handsontable/dist/handsontable.full.css';
+
+* {
+    font-family: 'Rubik', monospace;
+    font-size: 14px;
+}
