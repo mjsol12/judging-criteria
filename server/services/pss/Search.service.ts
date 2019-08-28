@@ -34,27 +34,53 @@ function groupBy(arr, property) {
         return memo;
     }, {});
 }
+function judgeScoringAverage(totalScores, propertyName) {
+    let numberOfJudges = 5;
+
+    let countNegativeJudges = 0;
+
+    const judge1 = totalScores[`JUDGE1_${propertyName}`];
+    if (judge1 <= 0 ) {
+        countNegativeJudges++;
+    }
+    const judge2 = totalScores[`JUDGE2_${propertyName}`];
+    if (judge2 <= 0 ) {
+        countNegativeJudges++;
+    }
+    const judge3 = totalScores[`JUDGE3_${propertyName}`];
+    if (judge3 <= 0 ) {
+        countNegativeJudges++;
+    }
+    const judge4 = totalScores[`JUDGE4_${propertyName}`];
+    if (judge4 <= 0 ) {
+        countNegativeJudges++;
+    }
+    const judge5 = totalScores[`JUDGE5_${propertyName}`];
+    if (judge5 <= 0 ) {
+        countNegativeJudges++;
+    }
+
+    numberOfJudges = numberOfJudges - countNegativeJudges;
+
+    const addedSUScores = judge1 + judge2 + judge3 + judge4 + judge5;
+
+    return  addedSUScores / numberOfJudges;
+}
 // male or female
 function judgesTotalScores(categories) {
-    const numberOfJudges = 3;
     // find female ranks and scores.
-    for (const m of categories) {
+    for (const category of categories) {
         // awards
         // school uniform score
-        const addedSUScores = m.JUDGE1_SCHOOL_UNIFORM_SCORE + m.JUDGE2_SCHOOL_UNIFORM_SCORE + m.JUDGE3_SCHOOL_UNIFORM_SCORE;
-        m.SCHOOL_UNIFORM_SCORE = addedSUScores / numberOfJudges;
+        category.SCHOOL_UNIFORM_SCORE = judgeScoringAverage(category, 'SCHOOL_UNIFORM_SCORE');
         // school sports score
-        const addedSWScores = m.JUDGE1_SPORTS_WEAR_SCORE + m.JUDGE2_SPORTS_WEAR_SCORE + m.JUDGE3_SPORTS_WEAR_SCORE;
-        m.SPORTS_WEAR_SCORE = addedSWScores / numberOfJudges;
+        category.SPORTS_WEAR_SCORE = judgeScoringAverage(category, 'SPORTS_WEAR_SCORE');
         // school costume score
-        const addedCCScores = m.JUDGE1_CREATIVE_COSTUME_SCORE + m.JUDGE2_CREATIVE_COSTUME_SCORE + m.JUDGE3_CREATIVE_COSTUME_SCORE;
-        m.CREATIVE_COSTUME_SCORE = addedCCScores / numberOfJudges;
+        category.CREATIVE_COSTUME_SCORE = judgeScoringAverage(category, 'CREATIVE_COSTUME_SCORE');
         // final round score
-        const addedScores = m.JUDGE1_FINAL_ROUND_SCORE + m.JUDGE2_FINAL_ROUND_SCORE + m.JUDGE3_FINAL_ROUND_SCORE;
-        m.FINAL_ROUND_SCORE = addedScores / numberOfJudges;
+        category.FINAL_ROUND_SCORE = judgeScoringAverage(category, 'FINAL_ROUND_SCORE');
         // question and answer score
-        const qASum = m.JUDGE1_QA_SCORE + m.JUDGE2_QA_SCORE + m.JUDGE3_QA_SCORE;
-        m.QA_SCORE = qASum / numberOfJudges;
+        category.QA_SCORE = judgeScoringAverage(category, 'QA_SCORE');
     }
 
     return categories;
@@ -87,14 +113,14 @@ function rankingCategory(categories) {
     const doneSUtoSW = rankScore(catogory, 'SCHOOL_UNIFORM_RANK', 'SCHOOL_UNIFORM_SCORE');
     const dontSWtoCC = rankScore(doneSUtoSW, 'SPORTS_WEAR_RANK', 'SPORTS_WEAR_SCORE');
     const doneCCtoFR = rankScore(dontSWtoCC, 'CREATIVE_COSTUME_RANK', 'CREATIVE_COSTUME_SCORE');
-    const doneAll = rankScore(doneCCtoFR, 'QA_RANK', 'QA_SCORE');
+    const finalRank = rankScore(doneCCtoFR, 'FINAL_ROUND_RANK', 'FINAL_ROUND_SCORE');
 
-    let finalRank = rankScore(doneAll, 'FINAL_ROUND_RANK', 'FINAL_ROUND_SCORE');
-    finalRank = finalRank.sort((a, b) => {
+    let doneAll = rankScore(finalRank, 'QA_RANK', 'QA_SCORE');
+    doneAll = doneAll.sort((a, b) => {
         return a.CANDIDATE_NUMBER - b.CANDIDATE_NUMBER;
     });
 
-    return finalRank;
+    return doneAll;
 }
 
 export module SearchService {
@@ -141,19 +167,7 @@ export module SearchService {
                 finalScore.CANDIDATE_NUMBER = candidate.CANDIDATE_NUMBER;
                 finalScore.CONTESTANT = `${candidate.CANDIDATE_NUMBER}(${candidate.CATEGORY})`;
 
-                let affix = '';
-
-                switch (score.userId) {
-                    case 'judge_1' :
-                        affix = 'JUDGE1';
-                        break;
-                    case 'judge_2' :
-                        affix = 'JUDGE2';
-                        break;
-                    case 'judge_3' :
-                        affix = 'JUDGE3';
-                        break;
-                }
+                const affix = `JUDGE${score.judgeNumber}`;
 
                 finalScore[`${affix}_FINAL_ROUND_SCORE`] = candidate.FINAL_ROUND_SCORE ? candidate.FINAL_ROUND_SCORE : 0;
                 finalScore[`${affix}_SCHOOL_UNIFORM_SCORE`] = candidate.SCHOOL_UNIFORM_SCORE ? candidate.SCHOOL_UNIFORM_SCORE : 0;
