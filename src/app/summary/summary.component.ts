@@ -176,7 +176,7 @@ export const qASummaryTable = {
     nestedHeaders: [
         [   '',
             {label: 'Judge', colspan: 5},
-            {label: 'Rank', colspan: 2}
+            {label: 'Rank', colspan: 1}
         ],
         [   'Candidate <br> <span style="font-size: 10px">#</span>',
             '1',
@@ -185,7 +185,6 @@ export const qASummaryTable = {
             '4 ',
             '5 ',
             'Final Score',
-            '#',
             ''
         ]
     ]

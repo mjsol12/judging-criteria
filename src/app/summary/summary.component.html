@@ -185,13 +185,8 @@
                                                          [editor]="false"
                                                          data="JUDGE5_QA_SCORE">
                                             </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
+                                            <hot-column  [renderer]="scoreRenderer"
                                                          data="QA_SCORE">
-                                            </hot-column>
-                                            <hot-column [renderer]="scoreRenderer"
-                                                        [readOnly]="true"
-                                                         data="QA_RANK">
                                             </hot-column>
                                         </hot-table>
                                     </div>
