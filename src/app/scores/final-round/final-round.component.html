@@ -6,67 +6,80 @@
             <button (click)="saveScore()">Save Scores</button>
         </div>
         <div class="border">
-                    <ngb-tabset type="pills">
-                        <ngb-tab *ngFor='let tab of scoringTabUi' title="{{tab.tabName}}">
-                            <ng-template ngbTabContent>
-                                <div class="border">
+            <ngb-tabset type="pills">
+                <ngb-tab *ngFor='let tab of scoringTabUi' title="{{tab.tabName}}">
+                    <ng-template ngbTabContent>
+                        <div class="border">
 
-                                    <hot-table
-                                            #finalRoundHotTable
-                                            rowHeights="40"
-                                            [nestedHeaders]="tab.header"
-                                            [rowHeaders]="true"
-                                            [contextMenu]="true"
-                                            className= "htCenter"
-                                            stretchH="all"
-                                            [data]="tab.scores"
-                                            height="600"
-                                            [dataSchema]="contestantSample"
-                                            [fixedColumnsLeft]="1"
-                                            [licenseKey]="'non-commercial-and-evaluation'">
-                                        <hot-column className= "htCenter"
-                                                    [editor]="false"
-                                                    [renderer]="candidateRenderer"
-                                                    data="CANDIDATE_NUMBER">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_SU_PERSONALITY">
-                                        </hot-column>
-                                        <hot-column type="numeric"
-                                                    data="FR_SU_POISE">
-                                        </hot-column>
-                                        <hot-column type="numeric"
-                                                    data="FR_SU_CARRIAGE">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_SW_POISE">
-                                        </hot-column>
-                                        <hot-column type="numeric"
-                                                    data="FR_SW_CARRIAGE">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_SW_FIGURE">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_SW_SPORTS_IDENTITY">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_CC_CONCEPT">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_CC_POISE">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_CC_CARRIAGE">
-                                        </hot-column>
-                                        <hot-column  type="numeric"
-                                                     data="FR_CC_BEAUTY">
-                                        </hot-column>
-                                    </hot-table>
-                                </div>
-                            </ng-template>
-                        </ngb-tab>
-                    </ngb-tabset>
+                            <hot-table
+                                    #finalRoundHotTable
+                                    rowHeights="40"
+                                    [nestedHeaders]="tab.header"
+                                    [rowHeaders]="true"
+                                    [contextMenu]="true"
+                                    className= "htCenter"
+                                    stretchH="all"
+                                    [data]="tab.scores"
+                                    height="600"
+                                    [dataSchema]="contestantSample"
+                                    [fixedColumnsLeft]="1"
+                                    [licenseKey]="'non-commercial-and-evaluation'">
+                                <hot-column className= "htCenter"
+                                            [editor]="false"
+                                            [renderer]="candidateRenderer"
+                                            data="CANDIDATE_NUMBER">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="FR_SU_PERSONALITY">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            data="FR_SU_POISE">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            data="FR_SU_CARRIAGE">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            [editor]="false"
+                                            data="SCHOOL_UNIFORM_RANK">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="FR_SW_POISE">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            data="FR_SW_CARRIAGE">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="FR_SW_FIGURE">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="FR_SW_SPORTS_IDENTITY">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            [editor]="false"
+                                            data="SPORTS_WEAR_RANK">
+                                </hot-column>
+
+                                <hot-column  type="numeric"
+                                             data="FR_CC_CONCEPT">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="FR_CC_POISE">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="FR_CC_CARRIAGE">
+                                </hot-column>
+                                <hot-column  type="numeric"
+                                             data="FR_CC_BEAUTY">
+                                </hot-column>
+                                <hot-column type="numeric"
+                                            [editor]="false"
+                                            data="CREATIVE_COSTUME_RANK">
+                                </hot-column>
+                            </hot-table>
+                        </div>
+                    </ng-template>
+                </ngb-tab>
+            </ngb-tabset>
         </div>
     </div>
 

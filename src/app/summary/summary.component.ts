@@ -47,8 +47,9 @@ export class SummaryComponent implements OnInit, AfterViewInit, OnDestroy {
 
     scoreRenderer(instance, td, row, col, prop, value, cellProperties) {
         if (value != null || (value && value.trim &&  value.trim() !== '')) {
+            td.style.fontWeight = 'bold';
             td.style.textAlign = 'center';
-            td.innerText = `${value.toFixed(2)}` || '0';
+            td.innerText = `${value}`;
         } else {
             td.innerText = '';
         }
@@ -129,8 +130,7 @@ export const finalSummaryTable = {
             {label: 'School Uniform', colspan: 7},
             {label: 'Sports Wear', colspan: 7},
             {label: 'Creative Costume', colspan: 7},
-            {label: 'Total Scores', colspan: 7},
-            {label: '', colspan: 7},
+            {label: 'Total Scores', colspan: 2},
             ''
         ],
         [   '',
@@ -140,9 +140,7 @@ export const finalSummaryTable = {
             {label: 'Rank', colspan: 2},
             {label: 'Judge', colspan: 5},
             {label: 'Rank', colspan: 2},
-            {label: 'Judge', colspan: 5},
             {label: 'Rank', colspan: 2},
-            {label: 'Judge', colspan: 5},
             'Rank'
         ],
         [   'Candidate <br> <span style="font-size: 10px">#</span>',
@@ -151,36 +149,24 @@ export const finalSummaryTable = {
             '3',
             '4',
             '5',
-            'Final Score',
-            '#',
+            'Score',
+            '<b>#</b>',
             '1',
             '2',
             '3',
             '4',
             '5',
-            'Final Score',
-            '#',
+            'Score',
+            '<b>#</b>',
             '1',
             '2',
             '3 ',
             '4',
             '5',
+            'Score',
+            '<b>#</b>',
             'Final Score',
-            '#',
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            'Final Score',
-            '#',
-            '1',
-            '2',
-            '3',
-            '4',
-            '5',
-            'Final Score',
-            '#',
+            '<b>#</b>',
             ''
         ]
     ]

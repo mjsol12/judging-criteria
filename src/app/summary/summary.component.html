@@ -50,14 +50,12 @@
                                                          [editor]="false"
                                                          data="JUDGE5_SCHOOL_UNIFORM_SCORE">
                                             </hot-column>
-                                            <hot-column  type="numeric"
+                                            <hot-column  className= "htCenter"
                                                          [editor]="false"
-                                                         [renderer]="scoreRenderer"
                                                          data="SCHOOL_UNIFORM_SCORE">
                                             </hot-column>
-                                            <hot-column  type="numeric"
-                                                         className= "htCenter"
-                                                         [editor]="false"
+                                            <hot-column  [editor]="false"
+                                                         [renderer]="scoreRenderer"
                                                          data="SCHOOL_UNIFORM_RANK">
                                             </hot-column>
                                             <!--end of SCHOOL_UNIFORM_SCORE > -->
@@ -85,12 +83,10 @@
                                             <hot-column  type="numeric"
                                                          [editor]="false"
                                                          className= "htCenter"
-                                                         [renderer]="scoreRenderer"
                                                          data="SPORTS_WEAR_SCORE">
                                             </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
-                                                         className= "htCenter"
+                                            <hot-column  [editor]="false"
+                                                         [renderer]="scoreRenderer"
                                                          data="SPORTS_WEAR_RANK">
                                             </hot-column>
                                             <!--end of SPORTS_WEAR_SCORE > -->
@@ -118,50 +114,21 @@
                                             <hot-column  type="numeric"
                                                          [editor]="false"
                                                          className= "htCenter"
-                                                         [renderer]="scoreRenderer"
                                                          data="CREATIVE_COSTUME_SCORE">
                                             </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
-                                                         className= "htCenter"
+                                            <hot-column  [editor]="false"
+                                                         [renderer]="scoreRenderer"
                                                          data="CREATIVE_COSTUME_RANK">
                                             </hot-column>
                                             <!--end of CREATIVE_COSTUME_SCORE > -->
                                             <!--<final round-->
                                             <hot-column  type="numeric"
                                                          [editor]="false"
-                                                         [renderer]="scoreRenderer"
-                                                         data="JUDGE1_FINAL_ROUND_SCORE">
-                                            </hot-column>
-                                            <hot-column type="numeric"
-                                                        [editor]="false"
-                                                        [renderer]="scoreRenderer"
-                                                        data="JUDGE2_FINAL_ROUND_SCORE">
-                                            </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
-                                                         [renderer]="scoreRenderer"
-                                                         data="JUDGE3_FINAL_ROUND_SCORE">
-                                            </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
-                                                         [renderer]="scoreRenderer"
-                                                         data="JUDGE4_FINAL_ROUND_SCORE">
-                                            </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
-                                                         [renderer]="scoreRenderer"
-                                                         data="JUDGE5_FINAL_ROUND_SCORE">
-                                            </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
                                                          className= "htCenter"
-                                                         [renderer]="scoreRenderer"
                                                          data="FINAL_ROUND_SCORE">
                                             </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
-                                                         className= "htCenter"
+                                            <hot-column  [editor]="false"
+                                                         [renderer]="scoreRenderer"
                                                          data="FINAL_ROUND_RANK">
                                             </hot-column>
                                             <!--end of finalRound > -->
@@ -194,6 +161,7 @@
                                                 [licenseKey]="'non-commercial-and-evaluation'">
                                             <hot-column className= "htCenter"
                                                         [editor]="false"
+                                                        [renderer]="scoreRenderer"
                                                         data="CANDIDATE_NUMBER">
                                             </hot-column>
                                             <!--final QA-->
@@ -219,11 +187,10 @@
                                             </hot-column>
                                             <hot-column  type="numeric"
                                                          [editor]="false"
-                                                         [renderer]="scoreRenderer"
                                                          data="QA_SCORE">
                                             </hot-column>
-                                            <hot-column  type="numeric"
-                                                         [editor]="false"
+                                            <hot-column [renderer]="scoreRenderer"
+                                                        [readOnly]="true"
                                                          data="QA_RANK">
                                             </hot-column>
                                         </hot-table>

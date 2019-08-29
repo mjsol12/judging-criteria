@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PageantApiService} from '../../shared/api/pss/pageant-api.service';
-import {Contestant, GENDER, Score} from '../../shared/model/pp/score.model';
+import {Contestant, Score} from '../../shared/model/pp/score.model';
 import {ToastrService} from 'ngx-toastr';
 import {Gender} from '../../shared/model/pageant-procedure/candidate.model';
 
@@ -109,9 +109,9 @@ export class FinalRoundComponent implements OnInit, AfterViewInit, OnDestroy {
 export const finalRoundTable = {
     nestedHeaders: [
         [   {label: '', colspan: 1},
-            {label: 'School Uniform', colspan: 3},
-            {label: 'Sports Wear', colspan: 4},
-            {label: 'Creative Costume', colspan: 4},
+            {label: 'School Uniform', colspan: 4},
+            {label: 'Sports Wear', colspan: 5},
+            {label: 'Creative Costume', colspan: 5},
             ''
         ],
         [
@@ -120,16 +120,19 @@ export const finalRoundTable = {
             'Personality <br> <spa style="font-size: 10px">50</spa>',
             'Poise & Bearing <br> <spa style="font-size: 10px">30</spa>',
             'Carriage <br> <spa style="font-size: 10px">20</spa>',
+            'Rank <br> <spa style="font-size: 10px">#</spa>',
 
             'Poise & Bearing <br> <spa style="font-size: 10px">40</spa>',
             'Carriage <br> <spa style="font-size: 10px">30</spa>',
             'Figure <br> <spa style="font-size: 10px">20</spa>',
             'Sports Identity <br> <spa style="font-size: 10px">10</spa>',
+            'Rank <br> <spa style="font-size: 10px">#</spa>',
 
             'Concept <br><span style="font-size: 10px;"> 40</span>',
             'Poise & Bearing <br> <spa style="font-size: 10px">25</spa>',
             'Carriage <br> <spa style="font-size: 10px">20</spa>',
             'Beauty <br> <spa style="font-size: 10px">15</spa>',
+            'Rank <br> <spa style="font-size: 10px">#</spa>',
             ''
         ]
     ]
