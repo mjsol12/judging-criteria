@@ -1,39 +1,35 @@
-<div class="container-fluid">
+<div class="container">
     <div class="container pt-2">
-        <h3 class="mt-3 text-center">List of Links</h3>
+        <h3 class="mt-3 text-uppercase">List of Links</h3>
     </div>
-    <div class="card">
+    <div class="card border-0">
         <div class="card-body">
             <div class="m-1">
                 <ul class="list-group">
-                    <li class="list-group-item" >
-                        Overall Summary : <a [href]="urlSummary" target="_blank">{{urlSummary}}</a>
+                    <li class="list-group-item border-0" >
+                         <a [href]="urlSummary" target="_blank">Overall Summary</a>
                     </li>
                 </ul>
             </div>
             <div class="row m-1">
                 <div class="col">
-                    <h5>
+                    <h5 class="mt-4">
                         Final Round Judges Scoring Links
                     </h5>
                     <ul class="list-group">
-                        <li class="list-group-item" >Judge 1: <a [href]="judge1FR" target="_blank">{{judge1FR}}</a></li>
-                        <li class="list-group-item" >Judge 2: <a [href]="judge2FR" target="_blank">{{judge2FR}}</a></li>
-                        <li class="list-group-item" >Judge 3: <a [href]="judge3FR" target="_blank">{{judge3FR}}</a></li>
-                        <li class="list-group-item" >Judge 4: <a [href]="judge4FR" target="_blank">{{judge4FR}}</a></li>
-                        <li class="list-group-item" >Judge 5: <a [href]="judge5FR" target="_blank">{{judge5FR}}</a></li>
+                        <li class="list-group-item border-0" *ngFor="let link of JudgesFinalRound">
+                            <a [href]="link.url" target="_blank">{{link.name}}</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="col">
-                    <h5>
+                    <h5 class="mt-4">
                         Question and Answer Judges Scoring Links
                     </h5>
                     <ul class="list-group">
-                        <li class="list-group-item" >Judge 1: <a [href]="judge1QA" target="_blank">{{judge1QA}}</a></li>
-                        <li class="list-group-item" >Judge 2: <a [href]="judge2QA" target="_blank">{{judge2QA}}</a></li>
-                        <li class="list-group-item" >Judge 3: <a [href]="judge3QA" target="_blank">{{judge3QA}}</a></li>
-                        <li class="list-group-item" >Judge 4: <a [href]="judge4QA" target="_blank">{{judge4QA}}</a></li>
-                        <li class="list-group-item" >Judge 5: <a [href]="judge5QA" target="_blank">{{judge5QA}}</a></li>
+                        <li class="list-group-item border-0" *ngFor="let link of JudgesQARound">
+                            <a [href]="link.url" target="_blank">{{link.name}}</a>
+                        </li>
                     </ul>
                 </div>
             </div>
