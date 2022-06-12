@@ -2,6 +2,9 @@
 @import '~handsontable/dist/handsontable.full.css';
 
 * {
-    font-family: 'Rubik', monospace;
+    font-family:  "SF Mono","Fira Code","Fira Mono","Roboto Mono",monospace !important;
     font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
